@@ -8,11 +8,7 @@
 </template>
 
 <script>
-import Echart from '../../components/EChart'
 export default {
-  components: {
-    Echart
-  },
   data() {
     return {
       userImg: require('../../assets/images/user.png'),
