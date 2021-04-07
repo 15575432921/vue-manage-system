@@ -1,19 +1,19 @@
 <template>
   <div class="manage">
     <el-dialog
-      :title="operateType === 'add' ? '新增文档' : '更新文档'"
-      :visible.sync="isShow">
+        :title="operateType === 'add' ? '新增文档' : '更新文档'"
+        :visible.sync="isShow">
       <file-form
-        :inline = "false"
-        :formLabel="operateFormLabel"
-        :fileForm="operateForm"
-        :rules="rules"
-        ref="fileForm"
+          :inline="false"
+          :formLabel="operateFormLabel"
+          :fileForm="operateForm"
+          :rules="rules"
+          ref="fileForm"
       ></file-form>
       <!-- action表示文件要上传到的后台API地址 -->
       <el-upload
-        class="upload-demo"
-        accept="
+          class="upload-demo"
+          accept="
         image/jpeg,
         image/png,
         image/jpg,
@@ -23,25 +23,18 @@
         application/vnd.ms-excel,
         application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
         .zip"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :before-remove="beforeRemove"
-        multiple
-        :limit="1"
-        :on-exceed="handleExceed"
-        :on-change="handleChange"
-        :file-list="fileList"
-        :auto-upload="false"
-        :show-file-list="true"
-        :on-progress="uploadOnProgress"
-        ref="uploadComponent"
+          :on-preview="handlePreview"
+
+          :before-remove="beforeRemove"
+          action=""
+          multiple
+          :on-change="handleChange"
+          :file-list="fileList"
+          :auto-upload="false"
+          :show-file-list="true"
+          :on-progress="uploadOnProgress"
+          ref="uploadComponent"
       >
-      <!-- <el-progress
-      v-if="progressFlag == true"
-      :text-inside="true"
-      :stroke-width="18"
-      :percentage="progressNum">
-      </el-progress> -->
       </el-upload>
 
       <div>
@@ -70,15 +63,15 @@
     </div>
 
     <file-table
-      :tableData="tableData"
-      :tableLabel="tableLabel"
-      :config="config"
-      @edit="editRow"
-      @del="delRow"
-      @submit="submitRow"
-      @changePage="handlePageChange"
-      @changeSize="handleSizeChange"
-      id="out-table"
+        :tableData="tableData"
+        :tableLabel="tableLabel"
+        :config="config"
+        @edit="editRow"
+        @del="delRow"
+        @submit="submitRow"
+        @changePage="handlePageChange"
+        @changeSize="handleSizeChange"
+        id="out-table"
     ></file-table>
   </div>
 </template>
@@ -91,13 +84,14 @@ import FileSaver from "file-saver";
 import XLSX from "xlsx";
 import axios from '../../axios/ajax'
 import qs from 'qs'
+
 export default {
   components: {
     CommonForm,
     FileTable,
     FileForm
   },
-  data () {
+  data() {
     return {
       loadProgress: 0, // 动态显示进度条
       progressFlag: false, // 关闭进度条
@@ -243,26 +237,32 @@ export default {
       ],
       rules: {
         file_code: [
-          { required: true, message: '请输入文档编号', trigger: 'blur' },
-          { min: 10, max: 255, message: '文档编号长度需要在 10 到 255 个字符', trigger: 'blur' }
+          {required: true, message: '请输入文档编号', trigger: 'blur'},
+          {min: 10, max: 255, message: '文档编号长度需要在 10 到 255 个字符', trigger: 'blur'}
         ],
         file_name: [
-          { required: true, message: '请输入文档名称', trigger: 'blur' },
-          { min: 4, max: 255, message: '文档名称长度需要在 4 到 255 个字符', trigger: 'blur' }
+          {required: true, message: '请输入文档名称', trigger: 'blur'},
+          {min: 4, max: 255, message: '文档名称长度需要在 4 到 255 个字符', trigger: 'blur'}
         ],
         file_type: [
-          { type: "enum", enum: ['设计文档', '审计文档', '行政文档', '档案文档'], required: true, message: '请选择文档类型：设计文档，审计文档，行政文档或档案文档', trigger: 'blur' }
+          {
+            type: "enum",
+            enum: ['设计文档', '审计文档', '行政文档', '档案文档'],
+            required: true,
+            message: '请选择文档类型：设计文档，审计文档，行政文档或档案文档',
+            trigger: 'blur'
+          }
         ],
         file_property: [
-          { message: '请输入文档说明', trigger: 'blur' },
-          { max: 255, message: '文档说明长度最多 255 个字符', trigger: 'blur' }
+          {message: '请输入文档说明', trigger: 'blur'},
+          {max: 255, message: '文档说明长度最多 255 个字符', trigger: 'blur'}
         ],
         file_version: [
-          { max: 255, message: '文档版本长度最多 255 个字符', trigger: 'blur' }
+          {max: 255, message: '文档版本长度最多 255 个字符', trigger: 'blur'}
         ],
         file_project: [
-          { message: '请输入文档相关项目', trigger: 'blur' },
-          { max: 255, message: '文档相关项目长度最多 255 个字符', trigger: 'blur' }
+          {message: '请输入文档相关项目', trigger: 'blur'},
+          {max: 255, message: '文档相关项目长度最多 255 个字符', trigger: 'blur'}
         ]
       },
       searchForm: {
@@ -274,334 +274,265 @@ export default {
           label: ""
         }
       ],
-      fileList: [
-
-      ],
+      fileList: [],
       formData: "",
     };
   },
   methods: {
-    handleSizeChange: function(size) {
+    handleSizeChange: function (size) {
       this.config.pagesize = size
       // console.log(this.config.pagesize)// 每页下拉显示数据
     },
-    handlePageChange: function(currentPage){
+    handlePageChange: function (currentPage) {
       this.config.currentPage = currentPage
       // console.log(this.config.currentPage) // 点击第几页
     },
-    handleRemove (file, fileList) {
-      this.$refs['uploadComponent'].clearFiles();
-    },
-    handlePreview (file) {
+    handlePreview(file) {
       console.log(file);
     },
-    handleExceed (files, fileList) {
-      this.$message.warning(
-        `当前限制选择 1 个文件，本次选择了 ${files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
-      );
-    },
-    beforeRemove (file, fileList) {
+    beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
     },
-    uploadOnProgress(event,file,fileList){
+    uploadOnProgress(event, file, fileList) {
       this.progressFlag = true; // 显示进度条
       this.loadProgress = parseInt(event.percent); // 动态获取文件上传进度
       if (this.loadProgress >= 100) {
-          this.loadProgress = 100
-          setTimeout( () => {this.progressFlag = false}, 1000) // 一秒后关闭进度条
+        this.loadProgress = 100
+        setTimeout(() => {
+          this.progressFlag = false
+        }, 1000) // 一秒后关闭进度条
       }
     },
-    handleChange (file, fileList) {
+    handleChange(file, fileList) {
       this.fileList = fileList;
     },
-    uploadCheck(){
-      var result = 0;
-      for (var key in this.operateForm) {
-        if (key === "file_url" && this.operateForm[key] != "NULL") {
-          result = 1;
-          break;
-        }
-      }
-
-      if (this.fileList.length > 0)
-      {
-        result = 2;
-      }
-
-      if (result === 1) {
-        this.$confirm("已经上传的旧文件将会被覆盖，请问确定要上传新的文件吗？", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(() => {
-          // console.log(this.$refs['uploadComponent'].$refs['upload-inner']);
-          this.$refs['uploadComponent'].$refs['upload-inner'].handleClick();
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消上传文件"
-          });
-        });
-      }
-      else if (result === 2)
-      {
-        this.$confirm("每次仅能上传一个文件，", "提示", {
-          confirmButtonText: "确定",
-          type: "warning"
-        });
-      }
-      else
-      {
-        this.$refs['uploadComponent'].$refs['upload-inner'].handleClick();
-      }
+    uploadCheck() {
+      this.$refs['uploadComponent'].$refs['upload-inner'].handleClick();
     },
-    onBeforeUpload (file) {
+    onBeforeUpload(file) {
       //console.log(file)
       const isIMAGE = (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg");
       const isDOCUMENT = (file.type === "application/pdf" ||
-                          file.type === "application/msword" ||
-                          file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-                          file.type === "application/vnd.ms-excel" ||
-                          file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+          file.type === "application/msword" ||
+          file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+          file.type === "application/vnd.ms-excel" ||
+          file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
       const isZip = (file.type === "application/x-zip-compressed");
       const isLt100M = file.size / 1024 / 1024 < 100;
-      
-      // console.log("isIMAGE",isIMAGE);
-      // console.log("isDOCUMENT",isDOCUMENT);
-      // console.log("isZip",isZip);
-      // console.log("isLt100M",isLt100M);
-
       if (!isIMAGE && !isDOCUMENT && !isZip) {
         this.$message({
-              type: "error",
-              message: "不支持此格式文件上传！"
-            });
+          type: "error",
+          message: "不支持此格式文件上传！"
+        });
       }
 
       if (!isLt100M) {
         this.$message({
-              type: "error",
-              message: "上传文件大小不得大于100MB！"
-            });
+          type: "error",
+          message: "上传文件大小不得大于100MB！"
+        });
       }
 
       return (isIMAGE || isDOCUMENT || isZip) && isLt100M;
     },
-    getList (name = '') {
+    getList(name = '') {
       this.config.loading = true
       axios._get("http://8.129.86.121:80/file/getOperator/").then(res => {
         this.$message.success("获取文档列表成功！")
         this.tableData = res;
-        
+
         for (var i = 0; i < this.tableData.length; i++) {
           if (this.tableData[i]["file_url"] == null) {
             this.tableData[i]["file_url"] = "NULL";
-          }
-          else {
+          } else {
             this.tableData[i]["file_url"] = window.encodeURI(this.tableData[i]["file_url"]);
           }
 
           this.if_submit = this.tableData[i].if_submit;
           this.if_issued = this.tableData[i].if_issued;
 
-          if (this.if_submit == '0')
-          {
+          if (this.if_submit == '0') {
             this.tableData[i]["submit_state"] = '待提交';
             this.tableData[i]["issue_state"] = '-';
-          }
-          else 
-          {
+          } else {
             this.tableData[i]["submit_state"] = '已提交';
-            if (this.if_issued == '0')
-            {
+            if (this.if_issued == '0') {
               this.tableData[i]["issue_state"] = '待审核';
-            }
-            else if (this.if_issued == '1')
-            {
+            } else if (this.if_issued == '1') {
               this.tableData[i]["issue_state"] = '被退回';
-            }
-            else
-            {
+            } else {
               this.tableData[i]["issue_state"] = '已通过';
             }
           }
         }
         this.config.loading = false;
         this.config.total = this.tableData.length;
-        if (this.tableData.length == 0)
-        {
+        if (this.tableData.length == 0) {
           this.config.currentPage = 0;
         }
       }, err => {
         alert("error!!!");
       })
     },
-    addRow () {
+    addRow() {
       this.operateForm = {};
       this.operateType = "add";
       this.isShow = true;
     },
-    editRow (row) {
+    editRow(row) {
       this.operateType = "edit";
       this.isShow = true;
       this.operateForm = row;
     },
-    confirm () {
+    confirm() {
       //console.log(this.$refs.fileForm.$children[0]);
       this.$refs.fileForm.$children[0].validate((valid) => {
-          if (valid) 
-          {
-            if (this.fileList.length != 0 &&!this.onBeforeUpload(this.fileList[0].raw))
-            {
-              this.fileList.splice(0, 1);
-              return false;
-            }
-
-            if (this.operateType === "edit")
-            {
-              let formdata = new FormData();
-              for (var key in this.operateForm) {
-                if (key != "issue_state" && key != "submit_state")
-                {
-                  formdata.append(key, this.operateForm[key])
-                }
-              }
-
-              if (this.fileList.length != 0) {
-                formdata.append("file", this.fileList[0].raw)
-                this.fileList.splice(0, 1);
-              }
-
-              axios._post('http://8.129.86.121:80/file/update/', formdata).then(res => {
-                this.$message.success("更新文档成功！");
-                this.isShow = false;
-                console.log("Inserted " + res);//res是返回插入数据的id
-                this.getList()
-              }, err => {
-                alert("error!!!");
-                this.$message({
-                  message: "更新文档失败",
-                  type: "error"
-                });
-              })
-            } 
-            else if (this.operateType === "add")
-            {
-              let formdata = new FormData();
-              for (var key2 in this.operateForm) {
-                if (key2 != "issue_state" && key2 != "submit_state")
-                {
-                  formdata.append(key2, this.operateForm[key2])
-                }
-              }
-              if (this.fileList.length != 0) {
-                formdata.append("file", this.fileList[0].raw)
-                this.fileList.splice(0, 1);
-              }
-
-              axios._post('http://8.129.86.121:80/file/upload/', formdata).then(res => {
-                this.$message.success("添加文档成功");
-                this.isShow = false;
-                this.getList()
-              }, err => {
-                alert("error!!!");
-                this.$message({
-                  message: "添加文档失败",
-                  type: "error"
-                });
-              })
-            }
-          } else {
-            this.$message({
-              type: "error",
-              message: "表单填写不合法，请检查必填项！"
-            });
+        if (valid) {
+          if (this.fileList.length != 0 && !this.onBeforeUpload(this.fileList[0].raw)) {
+            this.fileList.splice(0, 1);
             return false;
           }
-        });
+
+          if (this.operateType === "edit") {
+            let formdata = new FormData();
+            for (var key in this.operateForm) {
+              if (key != "issue_state" && key != "submit_state") {
+                formdata.append(key, this.operateForm[key])
+              }
+            }
+
+            if (this.fileList.length != 0) {
+              formdata.append("file", this.fileList[0].raw)
+              this.fileList.splice(0, 1);
+            }
+
+            axios._post('http://8.129.86.121:80/file/update/', formdata).then(res => {
+              this.$message.success("更新文档成功！");
+              this.isShow = false;
+              console.log("Inserted " + res);//res是返回插入数据的id
+              this.getList()
+            }, err => {
+              alert("error!!!");
+              this.$message({
+                message: "更新文档失败",
+                type: "error"
+              });
+            })
+          } else if (this.operateType === "add") {
+            let formdata = new FormData();
+            for (var key2 in this.operateForm) {
+              if (key2 != "issue_state" && key2 != "submit_state") {
+                formdata.append(key2, this.operateForm[key2])
+              }
+            }
+            if (this.fileList.length != 0) {
+              var files=[]
+              for(var file of this.fileList){
+                files.push(file.raw)}
+              formdata.append("file", files)
+              console.log(formdata.get("file"))
+              this.fileList=[]
+            }
+
+            axios._post('http://8.129.86.121:80/file/upload/', formdata).then(res => {
+              this.$message.success("添加文档成功");
+              this.isShow = false;
+              this.getList()
+            }, err => {
+              alert("error!!!");
+              this.$message({
+                message: "添加文档失败",
+                type: "error"
+              });
+            })
+          }
+        } else {
+          this.$message({
+            type: "error",
+            message: "表单填写不合法，请检查必填项！"
+          });
+          return false;
+        }
+      });
     },
     cancel() {
       this.isShow = false;
       this.getList();
     },
-    delRow (row) {
+    delRow(row) {
       this.$confirm("此操作将永久删除该文档信息及文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
-        .then(() => {
-          this.operateForm = row;
-          let formdata = new FormData();
-          for (var key3 in this.operateForm) {
-            if (key3 != "issue_state" && key3 != "submit_state")
-            {
-              formdata.append(key3, this.operateForm[key3])
+          .then(() => {
+            this.operateForm = row;
+            let formdata = new FormData();
+            for (var key3 in this.operateForm) {
+              if (key3 != "issue_state" && key3 != "submit_state") {
+                formdata.append(key3, this.operateForm[key3])
+              }
             }
-          }
 
-          axios._post('http://8.129.86.121:80/file/deletefile/', formdata).then(res => {
-            this.$message({
-              type: "success",
-              message: "删除成功!"
-            });
-            this.getList();
-          }, err => {
-            this.$message({
-              type: "error",
-              message: "删除失败"
-            });
-            this.getList();
+            axios._post('http://8.129.86.121:80/file/deletefile/', formdata).then(res => {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              this.getList();
+            }, err => {
+              this.$message({
+                type: "error",
+                message: "删除失败"
+              });
+              this.getList();
+            })
           })
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消删除"
+            });
           });
-        });
     },
-    submitRow (row) {
+    submitRow(row) {
       this.$confirm("此操作将提交文档信息及文件至审核人, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
-        .then(() => {
-          this.operateForm = row;
-          let formdata = new FormData();
-          for (var key4 in this.operateForm) {
-            if (key4 != "issue_state" && key4 != "submit_state")
-            {
-              formdata.append(key4, this.operateForm[key4])
+          .then(() => {
+            this.operateForm = row;
+            let formdata = new FormData();
+            for (var key4 in this.operateForm) {
+              if (key4 != "issue_state" && key4 != "submit_state") {
+                formdata.append(key4, this.operateForm[key4])
+              }
             }
-          }
 
-          axios._post('http://8.129.86.121:80/file/submitfile/', formdata).then(res => {
-            this.$message({
-              type: "success",
-              message: "提交成功!"
-            });
-            this.getList();
-          }, err => {
-            this.$message({
-              type: "error",
-              message: "提交失败"
-            });
-            this.getList();
+            axios._post('http://8.129.86.121:80/file/submitfile/', formdata).then(res => {
+              this.$message({
+                type: "success",
+                message: "提交成功!"
+              });
+              this.getList();
+            }, err => {
+              this.$message({
+                type: "error",
+                message: "提交失败"
+              });
+              this.getList();
+            })
           })
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消提交"
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消提交"
+            });
           });
-        });
     },
     //定义导出Excel表格事件
-    exportRow () {
+    exportRow() {
       /* 从表生成工作簿对象 */
       var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
       /* 获取二进制字符串作为输出 */
@@ -612,24 +543,23 @@ export default {
       });
       try {
         FileSaver.saveAs(
-          //Blob 对象表示一个不可变、原始数据的类文件对象。
-          //Blob 表示的不一定是JavaScript原生格式的数据。
-          //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
-          //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
-          new Blob([wbout], { type: "application/octet-stream" }),
-          //设置导出文件名称
-          "导出文档.xlsx"
+            //Blob 对象表示一个不可变、原始数据的类文件对象。
+            //Blob 表示的不一定是JavaScript原生格式的数据。
+            //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
+            //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
+            new Blob([wbout], {type: "application/octet-stream"}),
+            //设置导出文件名称
+            "导出文档.xlsx"
         );
       } catch (e) {
         if (typeof console !== "undefined") console.log(e, wbout);
       }
       return wbout;
     },
-    searchKey (keyword) {
+    searchKey(keyword) {
       if (keyword == "" || keyword == undefined || keyword == null) {
         this.getList();
-      }
-      else {
+      } else {
         this.config.loading = true;
         var dataList = [];
 
@@ -649,7 +579,7 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     this.getList();
   }
 };
