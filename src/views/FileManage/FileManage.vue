@@ -426,15 +426,14 @@ export default {
               }
             }
             if (this.fileList.length != 0) {
-              var files=[]
               for(var file of this.fileList){
-                files.push(file.raw)}
-              formdata.append("file", files)
-              console.log(formdata.get("file"))
+                formdata.append("files", file.raw,file.raw.name)
+              }
+              console.log(formdata.getAll("files"))
               this.fileList=[]
             }
-
-            axios._post('http://8.129.86.121:80/file/upload/', formdata).then(res => {
+            console.log(formdata)
+            axios._post('http://127.0.0.1:8080/file/upload/', formdata).then(res => {
               this.$message.success("添加文档成功");
               this.isShow = false;
               this.getList()
