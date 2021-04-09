@@ -5,10 +5,10 @@
 
       <el-form-item>
         <el-select v-model="searchObj.type" clearable placeholder="请选择">
-          <el-option label="项目" value="login_num"/>
-          <el-option label="文档" value="register_num"/>
-          <el-option label="合同" value="video_view_num"/>
-          <el-option label="投标" value="course_num"/>
+          <el-option label="项目" value="project"/>
+          <el-option label="文档" value="file"/>
+          <el-option label="合同" value="contract"/>
+          <el-option label="投标" value="tender"/>
         </el-select>
       </el-form-item>
 
@@ -34,9 +34,9 @@
       </el-form-item>
       <el-form-item>
         <el-select v-model="searchObj.projectClass" clearable placeholder="请选择项目类型">
-          <el-option label="财务审计" value="财务审计"/>
-          <el-option label="工程审计" value="工程审计"/>
-          <el-option label="竣工决算审计" value="竣工决算审计"/>
+          <el-option label="财务审计" value="financial"/>
+          <el-option label="工程审计" value="project"/>
+          <el-option label="税务审计" value="tax"/>
         </el-select>
       </el-form-item>
       <el-button
@@ -56,7 +56,7 @@
 
 <script>
 import echarts from 'echarts'
-
+import axios  from '../../axios/ajax'
 export default {
   data() {
     return {
@@ -84,6 +84,11 @@ export default {
 
     // 准备图表数据
     initChartData() {
+      console.log(this.searchObj);
+      // axios._get("",this.searchObj).then(res=>{
+      //   this.$message.success("获取文档列表成功！")
+      //    this.tableData = res;
+      // })
 
     },
 
@@ -95,7 +100,7 @@ export default {
 
       // 指定图表的配置项和数据
       var option = {
-        color: ['#61a0a8','#2f4554','#c23531', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
+        color: ['#61a0a8'],
         // x轴是类目轴（离散数据）,必须通过data设置类目数据
         xAxis: {
           type: 'category',
