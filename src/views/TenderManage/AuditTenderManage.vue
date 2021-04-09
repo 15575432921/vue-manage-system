@@ -52,6 +52,7 @@
     <div class="manage-header">
       <div>
         <el-button type="primary" @click="exportRow">导出</el-button>
+        <el-button type="primary" @click="exportPdf">自动生成项目PDF报告</el-button>
       </div>
 
       <common-form inline :formLabel="formLabel" :form="searchFrom">

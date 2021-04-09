@@ -50,6 +50,7 @@
     <div class="manage-header">
       <div>
         <el-button type="primary" @click="exportRow">导出</el-button>
+        <el-button type="primary" @click="exportPdf">自动生成项目PDF报告</el-button>
       </div>
 
       <common-form inline :formLabel="formLabel" :form="searchForm">
@@ -364,7 +365,7 @@ export default {
                           file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
       const isZip = (file.type === "application/x-zip-compressed");
       const isLt100M = file.size / 1024 / 1024 < 100;
-      
+
       // console.log("isIMAGE",isIMAGE);
       // console.log("isDOCUMENT",isDOCUMENT);
       // console.log("isZip",isZip);
@@ -401,12 +402,12 @@ export default {
 
           this.if_submit = this.tableData[i].if_submit;
           this.if_issued = this.tableData[i].if_issued;
-          
+
           if (this.if_submit == '0')
           {
             this.tableData[i]["submit_state"] = '待提交';
           }
-          else 
+          else
           {
             this.tableData[i]["submit_state"] = '已提交';
             if (this.if_issued == '0')
@@ -444,7 +445,7 @@ export default {
     confirm () {
       //console.log(this.$refs.fileForm.$children[0]);
       this.$refs.fileForm.$children[0].validate((valid) => {
-          if (valid) 
+          if (valid)
           {
             if (this.fileList.length != 0 && !this.onBeforeUpload(this.fileList[0].raw))
             {
@@ -466,7 +467,7 @@ export default {
                 formdata.append("file", this.fileList[0].raw)
                 this.fileList.splice(0, 1);
               }
-              
+
               axios._post('http://8.129.86.121:80/file/update/', formdata).then(res => {
                 this.$message.success("更新文档成功！");
                 this.isShow = false;

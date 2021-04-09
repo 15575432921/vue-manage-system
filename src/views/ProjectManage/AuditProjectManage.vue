@@ -54,6 +54,7 @@
     <div class="manage-header">
       <div>
         <el-button type="primary" @click="exportRow">导出</el-button>
+        <el-button type="primary" @click="exportPdf">自动生成项目PDF报告</el-button>
       </div>
       <common-form inline :formLabel="formLabel" :form="searchForm">
         <el-button type="primary" @click="searchKey(searchForm.keyword)"
@@ -509,7 +510,7 @@ export default {
                           file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
       const isZip = (file.type === "application/x-zip-compressed");
       const isLt100M = file.size / 1024 / 1024 < 100;
-      
+
       // console.log("isIMAGE",isIMAGE);
       // console.log("isDOCUMENT",isDOCUMENT);
       // console.log("isZip",isZip);
@@ -529,7 +530,7 @@ export default {
       axios._get("http://8.129.86.121:80/project/getCheckProject").then(res => {
         this.$message.success("获取项目列表成功！")
         this.tableData = res;
-        
+
         for (var i = 0; i < this.tableData.length; i++) {
           if (this.tableData[i]["file_url"] == null) {
             this.tableData[i]["file_url"] = "NULL";
@@ -540,12 +541,12 @@ export default {
 
           this.if_submit = this.tableData[i].if_submit;
           this.if_issued = this.tableData[i].if_issued;
-          
+
           if (this.if_submit == '0')
           {
             this.tableData[i]["submit_state"] = '待提交';
           }
-          else 
+          else
           {
             this.tableData[i]["submit_state"] = '已提交';
             if (this.if_issued == '0')
@@ -721,7 +722,7 @@ export default {
     confirm () {
       //console.log(this.$refs.commonForm.$children[0]);
       this.$refs.commonForm.$children[0].validate((valid) => {
-          if (valid) 
+          if (valid)
           {
             if (this.fileList.length != 0 && !this.onBeforeUpload(this.fileList[0].raw))
             {
