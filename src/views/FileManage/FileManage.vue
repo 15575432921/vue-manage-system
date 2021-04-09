@@ -24,7 +24,6 @@
         application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
         .zip"
           :on-preview="handlePreview"
-
           :before-remove="beforeRemove"
           action=""
           multiple
@@ -402,8 +401,10 @@ export default {
             }
 
             if (this.fileList.length != 0) {
-              formdata.append("file", this.fileList[0].raw)
-              this.fileList.splice(0, 1);
+              for(var file of this.fileList){
+                formdata.append("files", file.raw,file.raw.name)
+              }
+              this.fileList=[]
             }
 
             axios._post('http://8.129.86.121:80/file/update/', formdata).then(res => {
@@ -429,10 +430,8 @@ export default {
               for(var file of this.fileList){
                 formdata.append("files", file.raw,file.raw.name)
               }
-              console.log(formdata.getAll("files"))
               this.fileList=[]
             }
-            console.log(formdata)
             axios._post('http://127.0.0.1:8080/file/upload/', formdata).then(res => {
               this.$message.success("添加文档成功");
               this.isShow = false;

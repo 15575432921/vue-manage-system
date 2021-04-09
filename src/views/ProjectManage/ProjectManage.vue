@@ -12,8 +12,8 @@
       ></common-form>
             <!-- action表示文件要上传到的后台API地址 -->
       <el-upload
-        class="upload-demo"
-        accept="
+          class="upload-demo"
+          accept="
         image/jpeg,
         image/png,
         image/jpg,
@@ -23,26 +23,19 @@
         application/vnd.ms-excel,
         application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
         .zip"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :before-remove="beforeRemove"
-        multiple
-        :limit="1"
-        :on-exceed="handleExceed"
-        :on-change="handleChange"
-        :file-list="fileList"
-        :auto-upload="false"
-        :show-file-list="true"
-        :on-progress="uploadOnProgress"
-        ref="uploadComponent"
+          :on-preview="handlePreview"
+          :before-remove="beforeRemove"
+          action=""
+          multiple
+          :on-change="handleChange"
+          :file-list="fileList"
+          :auto-upload="false"
+          :show-file-list="true"
+          :on-progress="uploadOnProgress"
+          ref="uploadComponent"
       >
-      <!-- <el-progress
-      v-if="progressFlag == true"
-      :text-inside="true"
-      :stroke-width="18"
-      :percentage="progressNum">
-      </el-progress> -->
       </el-upload>
+
 
       <div>
         <el-button size="small" type="primary" @click="uploadCheck">上传文件</el-button>
@@ -424,81 +417,35 @@ export default {
     }
   },
   methods: {
-    handleSizeChange: function(size) {
+    handleSizeChange: function (size) {
       this.config.pagesize = size
       // console.log(this.config.pagesize)// 每页下拉显示数据
     },
-    handlePageChange: function(currentPage){
+    handlePageChange: function (currentPage) {
       this.config.currentPage = currentPage
       // console.log(this.config.currentPage) // 点击第几页
     },
-    handleRemove (file, fileList) {
-      this.$refs['uploadComponent'].clearFiles();
-    },
-    handlePreview (file) {
+    handlePreview(file) {
       console.log(file);
     },
-    handleExceed (files, fileList) {
-      this.$message.warning(
-        `当前限制选择 1 个文件，本次选择了 ${files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
-      );
-    },
-    beforeRemove (file, fileList) {
+    beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
     },
-    uploadOnProgress(event,file,fileList){
+    uploadOnProgress(event, file, fileList) {
       this.progressFlag = true; // 显示进度条
       this.loadProgress = parseInt(event.percent); // 动态获取文件上传进度
       if (this.loadProgress >= 100) {
-          this.loadProgress = 100
-          setTimeout( () => {this.progressFlag = false}, 1000) // 一秒后关闭进度条
+        this.loadProgress = 100
+        setTimeout(() => {
+          this.progressFlag = false
+        }, 1000) // 一秒后关闭进度条
       }
     },
-    handleChange (file, fileList) {
+    handleChange(file, fileList) {
       this.fileList = fileList;
     },
-    uploadCheck(){
-      var result = 0;
-      for (let key in this.operateForm) {
-        if (key === "file_url" && this.operateForm[key] != "NULL") {
-          result = 1;
-          break;
-        }
-      }
-
-      if (this.fileList.length > 0)
-      {
-        result = 2;
-      }
-
-      if (result === 1) {
-        this.$confirm("已经上传的旧文件将会被覆盖，请问确定要上传新的文件吗？", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(() => {
-          // console.log(this.$refs['uploadComponent'].$refs['upload-inner']);
-          this.$refs['uploadComponent'].$refs['upload-inner'].handleClick();
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消上传文件"
-          });
-        });
-      }
-      else if (result === 2)
-      {
-        this.$confirm("每次仅能上传一个文件，", "提示", {
-          confirmButtonText: "确定",
-          type: "warning"
-        });
-      }
-      else
-      {
-        this.$refs['uploadComponent'].$refs['upload-inner'].handleClick();
-      }
+    uploadCheck() {
+      this.$refs['uploadComponent'].$refs['upload-inner'].handleClick();
     },
     onBeforeUpload (file) {
       // console.log(file)
@@ -510,7 +457,7 @@ export default {
                           file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
       const isZip = (file.type === "application/x-zip-compressed");
       const isLt100M = file.size / 1024 / 1024 < 100;
-      
+
       // console.log("isIMAGE",isIMAGE);
       // console.log("isDOCUMENT",isDOCUMENT);
       // console.log("isZip",isZip);
@@ -555,7 +502,7 @@ export default {
             this.tableData[i]["submit_state"] = '待提交';
             this.tableData[i]["issue_state"] = '-';
           }
-          else 
+          else
           {
             this.tableData[i]["submit_state"] = '已提交';
             if (this.if_issued == '0')
@@ -572,7 +519,7 @@ export default {
             }
           }
         }
-        
+
         this.config.loading = false;
         this.config.total = this.tableData.length;
         if (this.tableData.length == 0)
@@ -608,7 +555,7 @@ export default {
               formdata.append(key, this.operateForm[key])
             }
           }
-          
+
           axios._post('http://8.129.86.121:80/project/submit', formdata).then(res => {
             this.$message({
               type: "success",
@@ -633,7 +580,7 @@ export default {
     confirm () {
       //console.log(this.$refs.commonForm.$children[0]);
       this.$refs.commonForm.$children[0].validate((valid) => {
-          if (valid) 
+          if (valid)
           {
             if (this.fileList.length != 0 &&!this.onBeforeUpload(this.fileList[0].raw))
             {
@@ -642,7 +589,7 @@ export default {
             }
 
 
-            if (this.operateType === 'edit') 
+            if (this.operateType === 'edit')
             {
               let formdata = new FormData();
               for (var key2 in this.operateForm) {
@@ -653,8 +600,10 @@ export default {
               }
 
               if (this.fileList.length != 0) {
-                formdata.append("file", this.fileList[0].raw)
-                this.fileList.splice(0, 1);
+                for(var file of this.fileList){
+                  formdata.append("files", file.raw,file.raw.name)
+                }
+                this.fileList=[]
               }
 
               axios._post('http://8.129.86.121:80/project/update', formdata).then(res => {
@@ -668,8 +617,8 @@ export default {
                   type: "error"
                 });
               })
-            } 
-            else if (this.operateType === 'add') 
+            }
+            else if (this.operateType === 'add')
             {
               let formdata = new FormData();
               for (var key3 in this.operateForm) {
@@ -678,12 +627,14 @@ export default {
                   formdata.append(key3, this.operateForm[key3])
                 }
               }
-              
+
               if (this.fileList.length != 0) {
-                formdata.append("file", this.fileList[0].raw)
-                this.fileList.splice(0, 1);
+                for(var file of this.fileList){
+                  formdata.append("files", file.raw,file.raw.name)
+                }
+                this.fileList=[]
               }
-              
+
               axios._post('http://8.129.86.121:80/project/insert', formdata).then(res => {
                 this.$message.success("新建项目成功！");
                 this.isShow = false
