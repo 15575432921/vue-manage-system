@@ -70,8 +70,8 @@ export default {
       btnDisabled: false,
       // chart: null,
       title: '',
-      xData: [],
-      yData: []
+      xData: ['一月', '二月', '三月', '四月', '五月', '六月', '七月','八月', '九月', '十月','十一月','十二月'],
+      yData: [1,2,3,4,5,6,7,8,9,10,11,12]
     }
   },
   methods: {
@@ -85,10 +85,11 @@ export default {
     // 准备图表数据
     initChartData() {
       console.log(this.searchObj);
-      // axios._get("",this.searchObj).then(res=>{
-      //   this.$message.success("获取文档列表成功！")
-      //    this.tableData = res;
-      // })
+      axios._get("http://127.0.0.1:8080/sta/getAll",this.searchObj).then(res=>{
+        this.$message.success("获取文档列表成功！")
+         this.yData = res
+        console.log(res)
+      })
 
     },
 
@@ -104,7 +105,7 @@ export default {
         // x轴是类目轴（离散数据）,必须通过data设置类目数据
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.xData
         },
         // y轴是数据轴（连续数据）
         yAxis: {
@@ -113,7 +114,7 @@ export default {
         // 系列列表。每个系列通过 type 决定自己的图表类型
         series: [{
           // 系列中的数据内容数组
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
+          data: this.yData,
           // 折线图
           // type: 'line'
           // 柱状图
