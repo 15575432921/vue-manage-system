@@ -34,9 +34,9 @@
       </el-form-item>
       <el-form-item>
         <el-select v-model="searchObj.projectClass" clearable placeholder="请选择项目类型">
-          <el-option label="财务审计" value="financial"/>
-          <el-option label="工程审计" value="project"/>
-          <el-option label="税务审计" value="tax"/>
+          <el-option label="财务审计" value="财务审计"/>
+          <el-option label="工程审计" value="工程审计"/>
+          <el-option label="税务审计" value="税务审计"/>
         </el-select>
       </el-form-item>
       <el-button
