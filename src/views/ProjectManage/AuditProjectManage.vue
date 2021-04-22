@@ -14,7 +14,7 @@
       <!-- action表示文件要上传到的后台API地址 -->
       <el-upload
         class="upload-demo"
-        :action="uploadApiUrl"
+        action=""
         accept="
         image/jpeg,
         image/png,
@@ -54,7 +54,7 @@
     <div class="manage-header">
       <div>
         <el-button type="primary" @click="exportRow">导出</el-button>
-        <el-button type="primary" @click="exportPdf">自动生成项目PDF报告</el-button>
+<!--        <el-button type="primary" @click="exportPdf">自动生成项目PDF报告</el-button>-->
       </div>
       <common-form inline :formLabel="formLabel" :form="searchForm">
         <el-button type="primary" @click="searchKey(searchForm.keyword)"
@@ -72,6 +72,7 @@
       @refuse="refuseProject"
       @changePage="handlePageChange"
       @changeSize="handleSizeChange"
+      @export="exportPdf"
       id="out-table"
     ></project-check-table>
   </div>
@@ -423,6 +424,33 @@ export default {
     }
   },
   methods: {
+    exportPdf(projectId)
+    {
+
+      this.$confirm("此操作将导出该项目, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+          .then(() => {
+              axios._get(`http://127.0.0.1:80/project/export/${projectId}`).then(res => {
+
+
+
+            }, err => {
+              this.$message({
+                type: "error",
+                message: "导出结果保存失败！"
+              });
+            })
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消导出"
+            });
+          });
+    },
     handleSizeChange: function(size) {
       this.config.pagesize = size
       // console.log(this.config.pagesize)// 每页下拉显示数据

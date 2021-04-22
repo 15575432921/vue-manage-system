@@ -13,7 +13,7 @@
         <template slot-scope="scope">
           <span style="margin-left: 10px"  v-if="!item.type && scope.row[item.prop] != 'null'">{{ scope.row[item.prop] }}</span>
           <span style="margin-left: 10px"  v-if="!item.type && scope.row[item.prop] == 'null'">-</span>
-          
+
           <span style="margin-left: 10px" v-if="item.prop === 'staff_namej'">
             {{ scope.row[item.prop] }}
           </span>
@@ -52,6 +52,9 @@
             <el-button size="mini" type="danger" @click="handleRefuse(scope.row)" v-if="scope.row['if_issued'] === '0'">退回</el-button>
             <el-button size="mini" type="info" v-else disabled>退回</el-button>
           </div>
+          <div>
+            <el-button size="mini" type="primary" @click="exportPdf(scope.row.project_id)">导出</el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -79,6 +82,10 @@ export default {
     config: Object
   },
   methods: {
+    exportPdf(id)
+    {
+      this.$emit('export',id)
+    },
     handleEdit(row) {
       this.$emit('edit', row)
     },

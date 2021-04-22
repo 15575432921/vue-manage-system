@@ -70,16 +70,14 @@ export default {
       btnDisabled: false,
       // chart: null,
       title: '',
-      xData: ['一月', '二月', '三月', '四月', '五月', '六月', '七月','八月', '九月', '十月','十一月','十二月'],
-      yData: [1,2,3,4,5,6,7,8,9,10,11,12]
+      xData: ['一月', '二月', '三月', '四月', '五月', '六月', '七月','八月', '九月', '十月','十一月','十二月','一月', '二月', '三月', '四月'],
+      yData: [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4],
+      end:100*12/16
     }
   },
   methods: {
     showChart() {
       this.initChartData()
-
-      this.setBarChart()
-      this.setPieChart()
     },
 
     // 准备图表数据
@@ -88,8 +86,16 @@ export default {
       axios._post("http://127.0.0.1:8080/sta/getAll",this.searchObj).then(res=>{
         this.$message.success("获取文档列表成功！")
          this.yData = res
-        console.log(res)
-      })
+        let n=res.length
+        if(n>12)
+          this.end=1200/n;
+        this.setBarChart()
+        this.setPieChart()
+      }).catch()
+      {
+        // this.setBarChart()
+        // this.setPieChart()
+      }
 
     },
 
@@ -101,6 +107,17 @@ export default {
 
       // 指定图表的配置项和数据
       var option = {
+        tooltip: {
+          trigger: 'axis',
+        },
+        dataZoom: [
+          {
+            show: true,
+            realtime: true,
+            start: 0,
+            end: this.end
+          }
+        ],
         color: ['#61a0a8'],
         // x轴是类目轴（离散数据）,必须通过data设置类目数据
         xAxis: {
