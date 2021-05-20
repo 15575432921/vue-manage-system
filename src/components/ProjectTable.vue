@@ -1,7 +1,7 @@
 <template>
   <div class="common-table">
     <el-table
-    :data="tableData.slice((this.config.currentPage-1)*this.config.pageSize,this.config.currentPage*this.config.pageSize)" 
+    :data="tableData.slice((this.config.currentPage-1)*this.config.pageSize,this.config.currentPage*this.config.pageSize)"
     height="90%"
     stripe v-loading="this.config.loading">
       <el-table-column
@@ -102,6 +102,11 @@
               >提交</el-button
             >
             <el-button size="mini" type="info" v-else disabled>提交</el-button>
+          </div>
+          <div>
+            <a :href="'http://localhost:8080/project/export/'+scope.row.project_id">
+              <el-button size="mini" type="primary">导出</el-button>
+            </a>
           </div>
         </template>
       </el-table-column>

@@ -42,6 +42,7 @@ export default {
           currentMenu[0].children.push(item)
         }
       })
+      console.log(currentMenu)
       router.addRoutes(currentMenu)
     },
     selectMenu(state, val) {

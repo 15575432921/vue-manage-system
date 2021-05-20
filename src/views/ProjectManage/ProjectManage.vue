@@ -35,8 +35,6 @@
           ref="uploadComponent"
       >
       </el-upload>
-
-
       <div>
         <el-button size="small" type="primary" @click="uploadCheck">上传文件</el-button>
         <div slot="tip" class="el-upload__tip">
@@ -240,7 +238,6 @@ export default {
         project_reportnumber: '',
         project_class: '',
         project_partner: '',
-        project_code: '',
         project_qualitycontroler: '',
         project_head: '',
         project_members: '',
@@ -516,6 +513,7 @@ export default {
             else
             {
               this.tableData[i]["issue_state"] = '已通过';
+             this.tableData.splice(i,1);
             }
           }
         }
@@ -531,9 +529,11 @@ export default {
       })
     },
     addRow () {
-      this.operateForm = {}
-      this.operateType = 'add'
-      this.isShow = true
+      // this.operateForm = {}
+      // this.operateType = 'add'
+      // this.isShow = true
+
+       this.$router.push({ path: '/addproject' })
     },
     editRow (row) {
       this.operateType = 'edit'

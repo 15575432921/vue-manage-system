@@ -62,7 +62,7 @@
         <el-button type="info" @click="getList()">重置</el-button>
       </common-form>
     </div>
-    <project-check-table
+    <project-global-check-table
       :tableData="tableData"
       :tableLabel="tableLabel"
       :config="config"
@@ -72,22 +72,22 @@
       @changePage="handlePageChange"
       @changeSize="handleSizeChange"
       id="out-table"
-    ></project-check-table>
+    ></project-global-check-table>
   </div>
 </template>
 
 <script>
 import CommonForm from '../../components/CommonForm'
-import ProjectCheckTable from '../../components/ProjectCheckTable'
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
 import axios from '../../axios/ajax'
 import qs from 'qs'
+import ProjectGlobalCheckTable from "@/components/ProjectGlobalCheckTable";
 
 export default {
   components: {
     CommonForm,
-    ProjectCheckTable
+    ProjectGlobalCheckTable
   },
   data () {
       let isPriceValidator = (rule, value, callback) => {
@@ -225,7 +225,7 @@ export default {
         },
         {
           prop: 'staff_names',
-          label: '审核人',
+          label: '部门审核人',
           width: 100,
           type: "name"
         }
@@ -258,7 +258,7 @@ export default {
         project_audit: '',
         project_reduction: '',
         project_departmentmanager:'',
-        project_generalmanager:''
+        project_generalmanager:'',
       },
       operateFormLabel: [
         {
@@ -658,6 +658,7 @@ export default {
               formdata.append(key3, this.operateForm[key3])
             }
           }
+
           axios._post('http://8.129.86.121:80/project/refuse', formdata).then(res => {
             if (res.code == "250") {
               this.$message({

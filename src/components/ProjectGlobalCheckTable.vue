@@ -20,16 +20,9 @@
 
           <span
             style="margin-left: 10px"
-            v-if="item.prop === 'staff_names' && scope.row['shen_he_ren'] != 0"
+            v-if="item.prop === 'staff_names'"
           >
             {{ scope.row[item.prop] }}
-          </span>
-
-          <span
-            style="margin-left: 10px"
-            v-if="item.prop === 'staff_names' && scope.row['shen_he_ren'] === 0"
-          >
-            -
           </span>
           <a :href="scope.row[item.prop]" v-if="item.type === 'link' && scope.row[item.prop] != 'NULL'">
             <el-button size="mini" type="primary">文件下载</el-button>
@@ -41,15 +34,15 @@
       <el-table-column label="操作" min-width="80" fixed="right">
         <template slot-scope="scope">
           <div>
-            <el-button size="mini" type="primary" @click="handleEdit(scope.row)" v-if="scope.row['if_issued'] === '0'">编辑</el-button>
+            <el-button size="mini" type="primary" @click="handleEdit(scope.row)" v-if="scope.row['if_issued'] === '2'">编辑</el-button>
             <el-button size="mini" type="info" v-else disabled>编辑</el-button>
           </div>
           <div>
-            <el-button size="mini" type="success" @click="handlePass(scope.row)" v-if="scope.row['if_issued'] === '0'">通过</el-button>
+            <el-button size="mini" type="success" @click="handlePass(scope.row)" v-if="scope.row['if_issued'] === '2'">通过</el-button>
             <el-button size="mini" type="info" v-else disabled>通过</el-button>
           </div>
           <div>
-            <el-button size="mini" type="danger" @click="handleRefuse(scope.row)" v-if="scope.row['if_issued'] === '0'">退回</el-button>
+            <el-button size="mini" type="danger" @click="handleRefuse(scope.row)" v-if="scope.row['if_issued'] === '2'">退回</el-button>
             <el-button size="mini" type="info" v-else disabled>退回</el-button>
           </div>
           <div>

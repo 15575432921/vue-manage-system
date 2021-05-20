@@ -1,9 +1,5 @@
 <template>
   <div class="page">
-    <!-- <div class="background">
-      <img :src="imgSrc" width="100%" height="100%" alt="" />
-    </div> -->
-    <!-- <vue-particles color="#dedede"></vue-particles> -->
     <vue-particles
       color="#409EEE"
       :particleOpacity="0.7"
@@ -50,9 +46,6 @@
                 <el-checkbox v-model="checked" style="color: dodgerblue"
                   >自动登录</el-checkbox
                 >
-                <!-- <el-link class="leftHref" type="primary" href="https://org.modao.cc/"
-                  >忘记密码？</el-link
-                > -->
               </div>
               <br>
               <div class="loginbtn">
@@ -60,38 +53,8 @@
                   >登录</el-button
                 >
               </div>
-              
-              <!-- <div>
-                <el-link type="primary" href="https://org.modao.cc/"
-                  >其它登录方式</el-link
-                >
-                <el-link class="leftHref" type="primary" href="https://org.modao.cc/"
-                  >注册账户</el-link
-                >
-              </div> -->
             </el-form-item>
           </el-form>
-        <!-- </el-tab-pane> -->
-        <!-- <el-tab-pane label="短信快捷登录">
-          <el-form :model="form">
-            <el-form-item label="手机号">
-              <el-input
-                v-model="form.username"
-                placeholder="请输入手机号"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="验证码">
-              <el-input placeholder="请输入验证码"></el-input>
-            </el-form-item>
-
-            <el-form-item>
-              <div class="loginbtn">
-                <el-button type="primary" @click="login" class="submit_btn" style="margin: auto"
-                >注册</el-button>
-              </div>
-            </el-form-item>
-          </el-form>
-        </el-tab-pane> -->
       </el-tabs>
     </div>
   </div>
@@ -114,43 +77,16 @@ export default {
     }
   },
   methods: {
-    // login () {
 
-    //   this.$http.post('api/permission/getMenu', this.form).then(res => {
-    //     res = res.data
-    //     if (res.code === 20000) {
-    //       this.$store.commit('clearMenu')
-    //       this.$store.commit('setMenu', res.data.menu)
-    //       this.$store.commit('setToken', res.data.token)
-    //       this.$store.commit('addMenu', this.$router)
-    //       if (res.type == '管理员') {
-    //         this.$router.push({ name: '我的客户' })
-    //       }
-    //       if (res.type == '经办人') {
-    //         this.$router.push({ name: 'project' })
-    //       }
-    //       if (res.type == '审核人') {
-    //         this.$router.push({ name: 'check' })
-    //       }
-    //       // this.$router.push({ name: 'contract' })
-    //     } else {
-    //       this.$message.warning(res.data.message)
-    //     }
-    //   })
-    // }
     login () {
-      // let obj = {
-      //   account: this.form.username,
-      //   password: this.form.password
-      // }
       var that = this;
       var params = new URLSearchParams();
       params.append("account", this.form.username);           //重点
       params.append("password", this.form.password);           //重点
       axios._post("http://8.129.86.121:8080/staff/login", params).then((response) => {
-        // console.log(response.token);
-        
+      // axios._post("http://localhost:8080/staff/login", params).then((response) => {
         this.$store.commit('setToken', response.token)
+        this.$store.commit('setUserName', this.form.username)
         if (response.status === 'success') {
           that.$message({
             message: 'success',
@@ -177,13 +113,13 @@ export default {
               this.$store.commit('addMenu', this.$router)
               // this.$router.push({ name: 'home' })
               if (res.type == '管理员') {
-                this.$router.push({ name: '我的客户' })
+                this.$router.push({ name: 'adminfile' })
               }
               if (res.type == '经办人') {
                 this.$router.push({ name: 'project' })
               }
               if (res.type == '审核人') {
-                this.$router.push({ name: 'check' })
+                this.$router.push({ name: 'home' })
               }
             }
           })

@@ -93,8 +93,8 @@ export default {
         this.setPieChart()
       }).catch()
       {
-        // this.setBarChart()
-        // this.setPieChart()
+        this.setBarChart()
+        this.setPieChart()
       }
 
     },
