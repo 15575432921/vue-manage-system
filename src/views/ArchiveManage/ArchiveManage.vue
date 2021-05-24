@@ -1,10 +1,10 @@
 <template>
   <div class="manage">
+
     <div class="manage-header">
       <div>
         <el-button type="primary" @click="exportRow">导出</el-button>
       </div>
-
       <common-form inline :formLabel="formLabel" :form="searchForm">
         <el-button type="primary" @click="searchKey(searchForm.keyword)"
         >搜索</el-button
@@ -12,27 +12,27 @@
         <el-button type="info" @click="getList()">重置</el-button>
       </common-form>
     </div>
-    <admin-file-table
+    <project-admin-table
         :tableData="tableData"
         :tableLabel="tableLabel"
         :config="config"
         @changePage="handlePageChange"
         @changeSize="handleSizeChange"
         id="out-table"
-    ></admin-file-table>
+    ></project-admin-table>
   </div>
 </template>
 
 <script>
 import CommonForm from "../../components/CommonForm";
-import AdminFileTable from "../../components/AdminFileTable";
+import ProjectAdminTable from '../../components/ProjectAdminTable'
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
 import axios from '../../axios/ajax'
-import store from "@/store";
+
 export default {
   components: {
-    AdminFileTable,
+    ProjectAdminTable,
     CommonForm
   },
   data () {
@@ -42,54 +42,92 @@ export default {
       tableData: [],
       tableLabel: [
         {
-          prop: "file_id",
+          prop: "project_id",
           label: "序号",
           width: 80
         },
         {
-          prop: "file_code",
-          label: "文档编号",
-          width: 150
+          prop: 'project_code',
+          label: '项目编号',
         },
         {
-          prop: "file_name",
-          label: "文档名称",
+          prop: 'project_type',
+          label: '审计大类类型',
+        },
+        {
+          prop: 'project_name',
+          label: '项目名称'
+        },
+        {
+          prop: 'project_client',
+          label: '客户名称',
+        },
+        {
+          prop: 'project_reportnumber',
+          label: '审计报告编号'
+        },
+        {
+          prop: 'project_class',
+          label: '项目类型'
+        },
+        {
+          prop: 'project_partner',
+          label: '项目合伙人'
+        },
+        {
+          prop: 'project_qualitycontroler',
+          label: '质控负责人'
+        },
+        {
+          prop: 'project_head',
+          label: '项目负责人',
+        },
+        {
+          prop: 'project_starttime',
+          label: '项目开始时间',
+        },
+        {
+          prop: 'project_endtime',
+          label: '项目结束时间',
+        },
+        {
+          prop: 'project_members',
+          label: '组员',
+        },
+        {
+          prop: 'project_accountant',
+          label: '签字注册会计师',
+        },
+        {
+          prop: 'project_costengineer',
+          label: '签字注册造价师',
+        },
+        {
+          prop: 'project_taxaccountant',
+          label: '签字税务师',
+        },
+        {
+          prop: 'project_comment',
+          label: '报告意见类型',
+        },
+        {
+          prop: 'project_construction',
+          label: '施工单位',
+        },
+        {
+          prop: 'project_assets',
+          label: '资产总额(万元)',
           width: 160
         },
         {
-          prop: "file_type",
-          label: "文档类型",
+          prop: 'project_audit',
+          label: '审定金额(万元)',
           width: 160
         },
         {
-          prop: "file_property",
-          label: "文档说明",
-          width: 200
-        },
-        {
-          prop: "file_id",
-          label: "文档编号",
-          width: 150
-        },
-        {
-          prop: "file_version",
-          label: "文档版本",
-          width: 150
-        },
-        {
-          prop: "file_project",
-          label: "所属项目",
-          width: 180
-        },
-        {
-          prop: "file_uploaddate",
-          label: "上传日期",
-          width: 150
-        },
-        {
-          prop: "file_updatedate",
-          label: "更新日期",
-          width: 150
+          prop: 'project_reduction',
+          label: '审减金额(万元)',
+          width: 160
         },
         {
           prop: "file_url",
@@ -98,8 +136,8 @@ export default {
           type: "link"
         },
         {
-          prop: "operatorname",
-          label: "经办人",
+          prop: 'staff_namej',
+          label: '经办人',
           width: 100,
           type: "name"
         },
@@ -109,11 +147,19 @@ export default {
           width: 100
         },
         {
-          prop: "checker",
-          label: "审核人",
+          prop: 'staff_names',
+          label: '审核人',
           width: 100,
           type: "name"
         },
+        {
+          prop: 'project_departmentmanager',
+          label: '部门审核意见',
+        },
+        {
+          prop: 'project_generalmanager',
+          label: '总经理审核意见',
+        }
       ],
       config: {
         currentPage: 1,
@@ -122,16 +168,16 @@ export default {
         loading: false
       },
       searchForm: {
-        keyword: ""
+        keyword: ''
       },
       formLabel: [
         {
-          model: "keyword",
-          label: ""
+          model: 'keyword',
+          label: ''
         }
       ],
       formData: "",
-    };
+    }
   },
   methods: {
     handleSizeChange: function(size) {
@@ -144,59 +190,55 @@ export default {
     },
     getList (name = '') {
       this.config.loading = true
-      let username = this.$store.state.user.username
-      console.log(username)
-      name ? (this.config.page = 1) : ''
-      // axios._get("http://8.129.86.121:80/file/getAdminFile").then(res => {
-      //   this.$message.success("获取文档列表成功！")
-      //   this.tableData = res;
-      //
-      //   for (var i = 0; i < this.tableData.length; i++) {
-      //     if (this.tableData[i]["file_url"] == null) {
-      //       this.tableData[i]["file_url"] = "NULL";
-      //     }
-      //     else {
-      //       this.tableData[i]["file_url"] = window.encodeURI(this.tableData[i]["file_url"]);
-      //     }
-      //
-      //     this.if_submit = this.tableData[i].if_submit;
-      //     this.if_issued = this.tableData[i].if_issued;
-      //
-      //     if (this.if_submit == '0')
-      //     {
-      //       this.tableData[i]["submit_state"] = '待提交';
-      //     }
-      //     else
-      //     {
-      //       this.tableData[i]["submit_state"] = '已提交';
-      //       if (this.if_issued == '0')
-      //       {
-      //         this.tableData[i]["issue_state"] = '待审核';
-      //       }
-      //       else if (this.if_issued == '1')
-      //       {
-      //         this.tableData[i]["issue_state"] = '被退回';
-      //       }
-      //       else
-      //       {
-      //         this.tableData[i]["issue_state"] = '已通过';
-      //       }
-      //     }
-      //   }
-      //
-      //   // this.config.total = res.data.count;
-      //   this.config.loading = false;
-      //   this.config.total = this.tableData.length;
-      //   if (this.tableData.length == 0)
-      //   {
-      //     this.config.currentPage = 0;
-      //   }
-      //   //console.log("tabledata: "+JSON.stringify(res));
-      // }, err => {
-      //   alert("getlist error!!!");
-      // })
+      axios._get("/project/getArchiveProject").then(res => {
+        this.$message.success("获取项目列表成功！")
+        this.tableData = res;
 
-      this.tableData = [];
+        for (var i = 0; i < this.tableData.length; i++) {
+          if (this.tableData[i]["file_url"] == null) {
+            this.tableData[i]["file_url"] = "NULL";
+          }
+          else {
+            this.tableData[i]["file_url"] = window.encodeURI(this.tableData[i]["file_url"]);
+          }
+
+          this.if_submit = this.tableData[i].if_submit;
+          this.if_issued = this.tableData[i].if_issued;
+
+          if (this.if_submit == '0')
+          {
+            this.tableData[i]["submit_state"] = '待提交';
+          }
+          else
+          {
+            this.tableData[i]["submit_state"] = '已提交';
+            if (this.if_issued == '0')
+            {
+              this.tableData[i]["issue_state"] = '待审核';
+            }
+            else if (this.if_issued == '1')
+            {
+              this.tableData[i]["issue_state"] = '被退回';
+            }
+            else if (this.if_issued == '2')
+            {
+              this.tableData[i]["issue_state"] = '部门通过';
+            }
+            else
+            {
+              this.tableData[i]["issue_state"] = '已通过';
+            }
+          }
+        }
+        this.config.loading = false;
+        this.config.total = this.tableData.length;
+        if (this.tableData.length == 0)
+        {
+          this.config.currentPage = 0;
+        }
+      }, err => {
+        alert("getlist error!!!");
+      })
     },
     //定义导出Excel表格事件
     exportRow () {
@@ -244,15 +286,19 @@ export default {
         this.tableData = dataList;
         this.config.loading = false;
         this.config.total = this.tableData.length;
+        if (this.tableData.length == 0)
+        {
+          this.config.currentPage = 0;
+        }
       }
-    }
+    },
   },
   created () {
-    this.getList();
+    this.getList()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
-//@import "@/assets/scss/common";
+@import "@/assets/scss/common";
 </style>

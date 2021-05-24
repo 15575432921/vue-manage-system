@@ -222,6 +222,14 @@ export default {
           label: '审核人',
           width: 100,
           type: "name"
+        },
+        {
+          prop: 'project_departmentmanager',
+          label: '部门审核意见',
+        },
+        {
+          prop: 'project_generalmanager',
+          label: '总经理审核意见',
         }
       ],
       config: {
@@ -479,7 +487,7 @@ export default {
     getList (name = '') {
       this.config.loading = true
       name ? (this.config.page = 1) : ''
-      axios._get("http://8.129.86.121:80/project/getAllProject").then(res => {
+      axios._get("/project/getAllProject").then(res => {
         this.$message.success("获取项目列表成功！")
         this.tableData = res;
 
@@ -510,10 +518,14 @@ export default {
             {
               this.tableData[i]["issue_state"] = '被退回';
             }
+            else if (this.if_issued == '2')
+            {
+              this.tableData[i]["issue_state"] = '部门通过';
+            }
             else
             {
               this.tableData[i]["issue_state"] = '已通过';
-             this.tableData.splice(i,1);
+             // this.tableData.splice(i,1);
             }
           }
         }
@@ -556,7 +568,7 @@ export default {
             }
           }
 
-          axios._post('http://8.129.86.121:80/project/submit', formdata).then(res => {
+          axios._post('/project/submit', formdata).then(res => {
             this.$message({
               type: "success",
               message: "提交成功!"
@@ -606,7 +618,7 @@ export default {
                 this.fileList=[]
               }
 
-              axios._post('http://8.129.86.121:80/project/update', formdata).then(res => {
+              axios._post('/project/update', formdata).then(res => {
                 this.$message.success("更新项目成功");
                 this.isShow = false
                 this.getList()
@@ -635,7 +647,7 @@ export default {
                 this.fileList=[]
               }
 
-              axios._post('http://8.129.86.121:80/project/insert', formdata).then(res => {
+              axios._post('/project/insert', formdata).then(res => {
                 this.$message.success("新建项目成功！");
                 this.isShow = false
                 this.getList()
@@ -677,7 +689,7 @@ export default {
           }
 
           axios
-            ._post('http://8.129.86.121:80/project/delete', formdata)
+            ._post('/project/delete', formdata)
             .then(res => {
               this.$message({
                 type: 'success',

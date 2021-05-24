@@ -50,7 +50,6 @@
     <div class="manage-header">
       <div>
         <el-button type="primary" @click="exportRow">导出</el-button>
-        <el-button type="primary" @click="exportPdf">自动生成项目PDF报告</el-button>
       </div>
 
       <common-form inline :formLabel="formLabel" :form="searchForm">
@@ -383,7 +382,7 @@ export default {
     getList (name = '') {
       this.config.loading = true
       name ? (this.config.page = 1) : ''
-      axios._get("http://8.129.86.121:80/file/getChecker").then(res => {
+      axios._get("/file/getChecker").then(res => {
         this.$message.success("获取文档列表成功！")
         this.tableData = res;
 
@@ -468,7 +467,7 @@ export default {
                 this.fileList.splice(0, 1);
               }
 
-              axios._post('http://8.129.86.121:80/file/update/', formdata).then(res => {
+              axios._post('/file/update/', formdata).then(res => {
                 this.$message.success("更新文档成功！");
                 this.isShow = false;
                 this.getList()
@@ -511,7 +510,7 @@ export default {
             }
           }
 
-          axios._post('http://8.129.86.121:80/file/checkdelete/', formdata).then(res => {
+          axios._post('/file/checkdelete/', formdata).then(res => {
             this.$message({
               type: "success",
               message: "删除成功!"
@@ -548,7 +547,7 @@ export default {
             }
           }
 
-          axios._post('http://8.129.86.121:80/file/checkpass/', formdata).then(res => {
+          axios._post('/file/checkpass/', formdata).then(res => {
             if (res.code == "250") {
               this.$message({
                 type: "error",
@@ -594,7 +593,7 @@ export default {
             }
           }
 
-          axios._post('http://8.129.86.121:80/file/checknotpass/', formdata).then(res => {
+          axios._post('/file/checknotpass/', formdata).then(res => {
             if (res.code == "250") {
               this.$message({
                 type: "error",

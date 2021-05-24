@@ -52,9 +52,7 @@
     <div class="manage-header">
       <div>
         <el-button type="primary" @click="exportRow">导出</el-button>
-        <el-button type="primary" @click="exportPdf">自动生成项目PDF报告</el-button>
       </div>
-
       <common-form inline :formLabel="formLabel" :form="searchFrom">
         <el-button type="primary" @click="searchKey(searchFrom.keyword)"
           >搜索</el-button
@@ -487,7 +485,7 @@ export default {
     getList(name = "") {
       this.config.loading = true;
       name ? (this.config.page = 1) : "";
-      axios._get("http://8.129.86.121:80/tender/getCheckTender").then(
+      axios._get("/tender/getCheckTender").then(
         (res) => {
           this.$message.success("获取投标列表成功！");
           this.tableData = res;
@@ -573,7 +571,7 @@ export default {
               this.fileList.splice(0, 1);
             }
 
-            axios._post("http://8.129.86.121:80/tender/update", formdata).then(
+            axios._post("/tender/update", formdata).then(
               (res) => {
                 this.$message.success("更新项目成功！");
                 this.isShow = false;
@@ -617,7 +615,7 @@ export default {
             }
           }
 
-          axios._post("http://8.129.86.121:80/tender/pass", formdata).then(
+          axios._post("/tender/pass", formdata).then(
             (res) => {
               if (res.code == "250") {
                 this.$message({
@@ -664,7 +662,7 @@ export default {
             }
           }
 
-          axios._post("http://8.129.86.121:80/tender/refuse", formdata).then(
+          axios._post("/tender/refuse", formdata).then(
             (res) => {
               if (res.code == "250") {
                 this.$message({

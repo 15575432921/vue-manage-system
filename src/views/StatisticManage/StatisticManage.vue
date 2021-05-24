@@ -83,7 +83,8 @@ export default {
     // 准备图表数据
     initChartData() {
       console.log(this.searchObj);
-      axios._post("http://127.0.0.1:8080/sta/getAll",this.searchObj).then(res=>{
+       // axios._post("http://8.129.86.121:80/sta/getAll",this.searchObj).then(res=>{
+      axios._post("/sta/getAll",this.searchObj).then(res=>{
         this.$message.success("获取文档列表成功！")
          this.yData = res
         let n=res.length

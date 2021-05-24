@@ -331,7 +331,7 @@ export default {
     getList (name = '') {
       this.config.loading = true
       name ? (this.config.page = 1) : ''
-      axios._get("http://8.129.86.121:80/file/GetAllContract").then(res => {
+      axios._get("/file/GetAllContract").then(res => {
         this.$message.success("获取合同列表成功！")
         this.tableData = res;
 
@@ -417,7 +417,7 @@ export default {
                 this.fileList=[]
               }
 
-              axios._post('http://8.129.86.121:80/file/update', formdata).then(res => {
+              axios._post('/file/update', formdata).then(res => {
                 this.$message.success("更新合同成功！");
                 this.isShow = false;
                 console.log("Inserted " + res);//res是返回插入数据的id
@@ -445,7 +445,7 @@ export default {
                 this.fileList=[]
               }
 
-              axios._post('http://8.129.86.121:80/file/upload', formdata).then(res => {
+              axios._post('/file/upload', formdata).then(res => {
                 this.$message.success("添加合同成功！");
                 this.isShow = false;
                 console.log("Inserted " + res);//res是返回插入数据的id
@@ -486,7 +486,7 @@ export default {
             formdata.append(key3, this.operateForm[key3])
           }
 
-          axios._post('http://8.129.86.121:80/file/deletefile', formdata).then(res => {
+          axios._post('/file/deletefile', formdata).then(res => {
             this.$message({
               type: "success",
               message: "删除成功!"
@@ -520,7 +520,7 @@ export default {
             formdata.append(key4, this.operateForm[key4])
           }
 
-          axios._post('http://8.129.86.121:80/file/submitfile', formdata).then(res => {
+          axios._post('/file/submitfile', formdata).then(res => {
             this.$message({
               type: "success",
               message: "提交成功!"

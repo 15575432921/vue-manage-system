@@ -27,10 +27,32 @@ export default {
                                 path: '/project',
                                 name: 'project',
                                 label: '项目管理',
-                                icon: 'user',
-                                url: 'ProjectManage/ProjectManage'
+                                icon: 'document',
+                                redirect: '/project/finance',
+                                children: [
+                                    {
+                                        path: '/project/finance',
+                                        name: 'finance',
+                                        label: '财务审计',
+                                        icon: 'document',
+                                        url: 'ProjectManage/ProjectManage'
+                                    },
+                                    {
+                                        path: '/project/engineering',
+                                        name: 'engineering',
+                                        label: '工程审计',
+                                        icon: 'document',
+                                        url: 'ProjectManage/ProjectManage'
+                                    },
+                                    {
+                                        path: '/project/taxation',
+                                        name: 'taxation',
+                                        label: '税务审计',
+                                        icon: 'document',
+                                        url: 'ProjectManage/ProjectManage'
+                                    },
+                                ]
                             },
-
                             {
                                 path: '/addproject',
                                 name: 'addProject',
@@ -107,7 +129,7 @@ export default {
                                 children: [
                                     {
                                         path: '/check/finance',
-                                        name: 'project',
+                                        name: 'finance',
                                         label: '财务审计',
                                         icon: 'document',
                                         url: 'ProjectManage/AuditProjectManage'
@@ -155,6 +177,13 @@ export default {
                                 label: "投标管理",
                                 icon: "position",
                                 url: 'TenderManage/AuditTenderManage'
+                            },
+                            {
+                                path: "/archive",
+                                name: "归档管理",
+                                label: "归档管理",
+                                icon: "files",
+                                url: 'ArchiveManage/ArchiveManage'
                             },
                             {
                                 path: "/sta",
@@ -191,7 +220,7 @@ export default {
                                 children: [
                                     {
                                         path: '/check/finance',
-                                        name: 'project',
+                                        name: 'finance',
                                         label: '财务审计',
                                         icon: 'document',
                                         url: 'ProjectManage/GlobalAuditProjectManage'
@@ -239,6 +268,13 @@ export default {
                                 label: "投标管理",
                                 icon: "position",
                                 url: 'TenderManage/AuditTenderManage'
+                            },
+                            {
+                                path: "/archive",
+                                name: "归档管理",
+                                label: "归档管理",
+                                icon: "files",
+                                url: 'ArchiveManage/ArchiveManage'
                             },
                             {
                                 path: "/sta",

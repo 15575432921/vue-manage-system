@@ -506,7 +506,7 @@ export default {
     getList(name = "") {
       this.config.loading = true;
       name ? (this.config.page = 1) : "";
-      axios._get("http://8.129.86.121:80/tender/getAllTender").then(
+      axios._get("/tender/getAllTender").then(
         // axios._get("").then(
         (res) => {
           this.$message.success("获取投标列表成功！");
@@ -587,7 +587,7 @@ export default {
               this.fileList.splice(0, 1);
             }
 
-            axios._post("http://8.129.86.121:80/tender/update", formdata).then(
+            axios._post("/tender/update", formdata).then(
               (res) => {
                 this.$message.success("更新投标成功！");
                 this.isShow = false;
@@ -614,7 +614,7 @@ export default {
               this.fileList.splice(0, 1);
             }
 
-            axios._post("http://8.129.86.121:80/tender/insert", formdata).then(
+            axios._post("/tender/insert", formdata).then(
               (res) => {
                 this.$message.success("新建投标成功");
                 this.isShow = false;
@@ -657,7 +657,7 @@ export default {
             }
           }
 
-          axios._post("http://8.129.86.121:80/tender/delete", formdata).then(
+          axios._post("/tender/delete", formdata).then(
             (res) => {
               this.$message({
                 type: "success",
@@ -696,7 +696,7 @@ export default {
             }
           }
 
-          axios._post("http://8.129.86.121:80/tender/submit", formdata).then(
+          axios._post("/tender/submit", formdata).then(
             (res) => {
               this.$message({
                 type: "success",

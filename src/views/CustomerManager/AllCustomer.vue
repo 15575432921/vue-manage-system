@@ -5,7 +5,7 @@
         <el-form-item label="客户编号" prop="client_id" >
           <el-input v-model="editObject.client_id" ></el-input>
         </el-form-item>
-        <el-form-item label="客户名称" prop="client_name" > 
+        <el-form-item label="客户名称" prop="client_name" >
           <el-input v-model="editObject.client_name"></el-input>
         </el-form-item>
         <el-form-item label="客户地址" prop="client_work_address">
@@ -28,7 +28,7 @@
         </el-form-item>
         <el-form-item label="联系人电话" prop="client_person_phone" >
           <el-input v-model="editObject.client_person_phone"
-          onkeyup="this.value=this.value.replace(/[^\d.]/g,'');" maxlength="11"></el-input> 
+          onkeyup="this.value=this.value.replace(/[^\d.]/g,'');" maxlength="11"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -42,7 +42,7 @@
         <el-form-item label="客户编号" prop="client_id">
           <el-input v-model="newObject.client_id"></el-input>
         </el-form-item>
-        <el-form-item label="客户名称" prop="client_name"> 
+        <el-form-item label="客户名称" prop="client_name">
           <el-input v-model="newObject.client_name"></el-input>
         </el-form-item>
         <el-form-item label="客户地址" prop="client_work_address">
@@ -71,7 +71,7 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormAddVisable = false">取消</el-button>
         <el-button  type="primary" @click="handleClickConfirmAdd">确定</el-button>
-        
+
       </div>
     </el-dialog>
 
@@ -149,7 +149,7 @@
           <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="经营范围">
               <span>{{props.row.client_business}}</span>
-            </el-form-item> 
+            </el-form-item>
           </el-form>
         </template>
       </el-table-column>
@@ -252,7 +252,7 @@ export default {
         ],
         client_person_name:[
           { required: true, message: '请输入联系人姓名', trigger: 'blur' },
-        ], 
+        ],
         client_person_phone:[
           { required: true, message: '请输入联系人电话', trigger: 'blur' },
           {min: 11, max: 11, message:'请输入正确的电话号码', trigger: 'blur'}
@@ -282,7 +282,7 @@ export default {
       let params = {
 
       };
-      let url = 'http://8.129.86.121:8080/readAllClient'
+      let url = '/readAllClient'
       this.$axios
         .post(url, qs.stringify(params))
         .then(successResponse => {
@@ -300,7 +300,7 @@ export default {
             let params = {
               client_id: item.client_id
             }
-            let url = 'http://8.129.86.121:8080/client/delete'
+            let url = '/client/delete'
             this.$axios
               .post(url, qs.stringify(params))
               .then(successResponse => {
@@ -329,7 +329,7 @@ export default {
           this.dialogFormVisible = false;
           if (confirm("确定修改吗？")) {
             this.tableData.forEach((item) => {
-              if (item.client_id == this.editObject.client_id) { 
+              if (item.client_id == this.editObject.client_id) {
                 let params = {
                 client_id: item.client_id,
                 client_name: item.client_name,
@@ -341,7 +341,7 @@ export default {
                 client_person_name:item.client_person_name,
                 client_person_phone:item.client_person_phone
                 };
-                let url = "http://8.129.86.121:8080/client/update"
+                let url = "/client/update"
                 this.$axios
                   .post(url, qs.stringify(params))
                   .then(successResponse => {
@@ -378,13 +378,13 @@ export default {
               client_person_name:this.newObject.client_person_name,
               client_person_phone:this.newObject.client_person_phone
             };
-            let url = "http://8.129.86.121:8080/client/add"
+            let url = "/client/add"
             this.$axios
             .post(url, qs.stringify(params))
             .then(successResponse => {
               //alert('新增成功')
               this.$message.success("新增成功");
-              this.loadData(); 
+              this.loadData();
             })
             .catch(failResponse => {
               //alert('新增失败')
@@ -394,7 +394,7 @@ export default {
         }else{
           console.log('表单验证不合法！请检查必填项是否按规则填写');
           return false;
-        }  
+        }
       })
     },
     querySearch (queryString, cb) {

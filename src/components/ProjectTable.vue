@@ -104,8 +104,9 @@
             <el-button size="mini" type="info" v-else disabled>提交</el-button>
           </div>
           <div>
-            <a :href="'http://localhost:8080/project/export/'+scope.row.project_id">
-              <el-button size="mini" type="primary">导出</el-button>
+            <a :href="'/project/export/'+scope.row.project_id">
+<!--            <a :href="'http://localhost:8080/project/export/'+scope.row.project_id">-->
+              <el-button size="mini" type="primary">报告</el-button>
             </a>
           </div>
         </template>

@@ -100,32 +100,34 @@ export const oExport = (url) => {
     })
   })
 };
+const DEFAULT_URL="http://localhost:8080"
+// const DEFAULT_URL="http://8.129.86.121:80"
 export default {
   _get (url) {
-    return oGet(url);
+    return oGet(DEFAULT_URL+url);
   },
   _remove (url, user) {
     // var project_id = user.project_id;
     //alert("remove+   "+project_id)
-    return oRemove(url, user);
+    return oRemove(DEFAULT_URL+url, user);
 
   },
 
   _removeUsers (url, param) {
-    return oRemove(url + "?project_id" + param);
+    return oRemove(DEFAULT_URL+url + "?project_id" + param);
   },
 
   _post (url, params) {
-    return oPost(url, params);
+    return oPost(DEFAULT_URL+url, params);
   },
 
   _update (url, param, params) {
-    return oUpdate(url + param, params);
+    return oUpdate(DEFAULT_URL+url + param, params);
   },
 
 // 文件导出
   _export(url){
-    return oExport(url);
+    return oExport(DEFAULT_URL+url);
     }
 
 }

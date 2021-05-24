@@ -140,7 +140,7 @@ export default {
     getList (name = '') {
       this.config.loading = true
       name ? (this.config.page = 1) : ''
-      axios._get("http://8.129.86.121:8080/file/getAdminCon").then(res => {
+      axios._get("/file/getAdminCon").then(res => {
         this.$message.success("获取合同列表成功！")
         this.tableData = res;
 
@@ -154,12 +154,12 @@ export default {
 
           this.if_submit = this.tableData[i].if_submit;
           this.if_issued = this.tableData[i].if_issued;
-          
+
           if (this.if_submit == '0')
           {
             this.tableData[i]["submit_state"] = '待提交';
           }
-          else 
+          else
           {
             this.tableData[i]["submit_state"] = '已提交';
             if (this.if_issued == '0')

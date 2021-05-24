@@ -182,10 +182,10 @@ export default {
     },
     getList (name = '') {
       this.config.loading = true
-      axios._get("http://8.129.86.121:80/project/getAdmin").then(res => {
+      axios._get("/project/getAdmin").then(res => {
         this.$message.success("获取项目列表成功！")
         this.tableData = res;
-        
+
         for (var i = 0; i < this.tableData.length; i++) {
           if (this.tableData[i]["file_url"] == null) {
             this.tableData[i]["file_url"] = "NULL";
@@ -196,12 +196,12 @@ export default {
 
           this.if_submit = this.tableData[i].if_submit;
           this.if_issued = this.tableData[i].if_issued;
-          
+
           if (this.if_submit == '0')
           {
             this.tableData[i]["submit_state"] = '待提交';
           }
-          else 
+          else
           {
             this.tableData[i]["submit_state"] = '已提交';
             if (this.if_issued == '0')
@@ -211,6 +211,10 @@ export default {
             else if (this.if_issued == '1')
             {
               this.tableData[i]["issue_state"] = '被退回';
+            }
+            else if (this.if_issued == '2')
+            {
+              this.tableData[i]["issue_state"] = '部门通过';
             }
             else
             {

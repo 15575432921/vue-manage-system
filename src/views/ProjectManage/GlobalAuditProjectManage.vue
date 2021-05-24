@@ -228,6 +228,14 @@ export default {
           label: '部门审核人',
           width: 100,
           type: "name"
+        },
+        {
+          prop: 'project_departmentmanager',
+          label: '部门审核意见',
+        },
+        {
+          prop: 'project_generalmanager',
+          label: '总经理审核意见',
         }
       ],
       config: {
@@ -542,8 +550,8 @@ export default {
     },
     getList (name = '') {
       this.config.loading = true
-      axios._get("http://localhost:8080/project/getCheckProject").then(res => {
-      // axios._get("http://8.129.86.121:80/project/getCheckProject").then(res => {
+      // axios._get("http://localhost:8080/project/getCheckProject").then(res => {
+      axios._get("/project/getCheckProject").then(res => {
         this.$message.success("获取项目列表成功！")
         this.tableData = res;
 
@@ -614,7 +622,7 @@ export default {
             }
           }
 
-          axios._post('http://8.129.86.121:80/project/pass', formdata).then(res => {
+          axios._post('/project/globalpass', formdata).then(res => {
             if (res.code == "250") {
               this.$message({
                 type: "error",
@@ -659,7 +667,7 @@ export default {
             }
           }
 
-          axios._post('http://8.129.86.121:80/project/refuse', formdata).then(res => {
+          axios._post('/project/globalrefuse', formdata).then(res => {
             if (res.code == "250") {
               this.$message({
                 type: "error",
@@ -766,7 +774,7 @@ export default {
                 this.fileList.splice(0, 1);
               }
 
-              axios._post('http://8.129.86.121:80/project/update', formdata).then(res => {
+              axios._post('/project/update', formdata).then(res => {
                 this.$message.success("更新项目成功！");
                 this.isShow = false;
                 this.getList()

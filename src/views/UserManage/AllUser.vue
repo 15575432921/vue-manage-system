@@ -78,7 +78,8 @@
         <el-form-item label="员工权限" prop="weight">
           <el-select v-model="editObject.weight" placeholder="请选择员工权限">
             <el-option label="经办人" value="3"></el-option>
-            <el-option label="审核人" value="1"></el-option>
+            <el-option label="一级审核" value="1"></el-option>
+            <el-option label="二级审核" value="4"></el-option>
             <el-option label="管理员" value="2"></el-option>
           </el-select>
         </el-form-item>
@@ -121,7 +122,8 @@
         <el-form-item label="员工权限" prop="weight">
           <el-select v-model="newObject.weight" placeholder="请选择员工权限">
             <el-option label="经办人" value="3"></el-option>
-            <el-option label="审核人" value="1"></el-option>
+            <el-option label="一级审核" value="1"></el-option>
+            <el-option label="二级审核" value="4"></el-option>
             <el-option label="管理员" value="2"></el-option>
           </el-select>
         </el-form-item>
@@ -332,6 +334,7 @@
 
 <script>
 import qs from "qs";
+import axios from "../../axios/ajax";
 export default {
   data () {
     return {
@@ -370,7 +373,7 @@ export default {
       holiday: "1",
       authority: "1",
       department: "",
-      
+
       rules1:{
         Id:[{required:true, message:'请输入6位员工ID', trigger:'blur', min:6, max:6}],
         name:[{required: true, message: '请填写员工姓名', trigger: 'blur'}],
@@ -416,12 +419,11 @@ export default {
   methods: {
     loadData () {
       let params = {};
-      let url = "http://8.129.86.121:8080/stuff/delete/load";
-      this.$axios
-        .post(url, qs.stringify(params))
-        .then((successResponse) => {
-          
-          this.tableData = successResponse.data;
+      let url = "/stuff/delete/load";
+      axios._post(url, qs.stringify(params)).then((successResponse) => {
+
+          this.tableData = successResponse;
+        // console.log(successResponse)
         })
         .catch((failResponse) => {
           alert("请求失败");
@@ -432,7 +434,7 @@ export default {
       var formdata = new FormData();
       formdata.append("staff_id",this.staff_id);
       this.$axios.post(
-        "http://8.129.86.121:8080/staff/info",formdata
+        "/staff/info",formdata
       )
         .then(res => {
           console.log(res)
@@ -483,7 +485,7 @@ export default {
             let params = {
               Id: item.Id,
             };
-            let url = "http://8.129.86.121:8080/stuff/delete";
+            let url = "/stuff/delete";
             this.$axios
               .post(url, qs.stringify(params))
               .then((successResponse) => {
@@ -539,7 +541,7 @@ export default {
                     staff_out_date: item.outDate,
                     staff_annual_leave: item.holiday
                   };
-                  let url = "http://8.129.86.121:8080/staff/update";
+                  let url = "/staff/update";
                   this.$axios
                     .post(url, qs.stringify(params))
                     .then((successResponse) => {
@@ -556,7 +558,7 @@ export default {
             return false;
           }
         });
-      
+
     },
     handleClickConfirmAdd (form) {
       this.$refs[form].validate((valid) => {
@@ -575,7 +577,7 @@ export default {
                 salary: this.newObject.salary,
                 weight: this.newObject.weight,
               };
-              let url = "http://8.129.86.121:8080/stuff/add";
+              let url = "/stuff/add";
               this.$axios
                 .post(url, qs.stringify(params))
                 .then((successResponse) => {
@@ -590,7 +592,7 @@ export default {
             return false;
           }
         });
-      
+
     },
     querySearch (queryString, cb) {
       let items = this.tableData;

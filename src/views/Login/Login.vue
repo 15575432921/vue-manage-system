@@ -83,7 +83,7 @@ export default {
       var params = new URLSearchParams();
       params.append("account", this.form.username);           //重点
       params.append("password", this.form.password);           //重点
-      axios._post("http://8.129.86.121:8080/staff/login", params).then((response) => {
+      axios._post("/staff/login", params).then((response) => {
       // axios._post("http://localhost:8080/staff/login", params).then((response) => {
         this.$store.commit('setToken', response.token)
         this.$store.commit('setUserName', this.form.username)
@@ -116,10 +116,10 @@ export default {
                 this.$router.push({ name: 'adminfile' })
               }
               if (res.type == '经办人') {
-                this.$router.push({ name: 'project' })
+                this.$router.push({ name: 'finance' })
               }
               if (res.type == '审核人') {
-                this.$router.push({ name: 'home' })
+                this.$router.push({ name: 'finance' })
               }
             }
           })
