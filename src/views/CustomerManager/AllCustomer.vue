@@ -228,6 +228,7 @@
 
 <script>
 import qs from 'qs'
+import axios from '../../axios/ajax'
 export default {
   data () {
     return {
@@ -283,11 +284,10 @@ export default {
 
       };
       let url = '/readAllClient'
-      this.$axios
-        .post(url, qs.stringify(params))
+      axios._post(url, qs.stringify(params))
         .then(successResponse => {
           // alert('请求成功')
-          this.tableData = successResponse.data
+          this.tableData = successResponse
         })
         .catch(failResponse => {
           alert('请求失败')
@@ -342,8 +342,8 @@ export default {
                 client_person_phone:item.client_person_phone
                 };
                 let url = "/client/update"
-                this.$axios
-                  .post(url, qs.stringify(params))
+                axios
+                  ._post(url, qs.stringify(params))
                   .then(successResponse => {
                     //alert('修改成功')
                     this.$message.success("修改成功");
@@ -379,8 +379,8 @@ export default {
               client_person_phone:this.newObject.client_person_phone
             };
             let url = "/client/add"
-            this.$axios
-            .post(url, qs.stringify(params))
+            axios
+            ._post(url, qs.stringify(params))
             .then(successResponse => {
               //alert('新增成功')
               this.$message.success("新增成功");

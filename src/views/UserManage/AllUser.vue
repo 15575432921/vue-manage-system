@@ -350,7 +350,7 @@ export default {
       showObject: {},
       staff_id:"",
       photo: "",
-      name: "1",
+      name: "",
       gender: "1",
       num: "1",
       account: "1",
@@ -363,7 +363,7 @@ export default {
       phone: "1",
       email: "1",
       position: "1",
-      state: "1",
+      state: "",
       type: "1",
       dateOnBroad: "1",
       dateOfDeparture: "1",
@@ -375,7 +375,8 @@ export default {
       department: "",
 
       rules1:{
-        Id:[{required:true, message:'请输入6位员工ID', trigger:'blur', min:6, max:6}],
+        Id:[{required:true, message:'请输入员工ID', trigger:'blur', min:1, max:255}],
+        // Id:[{required:true, message:'请输入6位员工ID', trigger:'blur', min:6, max:6}],
         name:[{required: true, message: '请填写员工姓名', trigger: 'blur'}],
         sex:[{trigger:'change'}],
         birth:[],
@@ -399,7 +400,7 @@ export default {
         weight:[{required:true, trigger:'change',message:'请选择员工权限'}]
       },
       rules2:{
-        Id:[{required:true, message:'请输入6位员工ID', trigger:'blur', min:6, max:6}],
+        Id:[{required:true, message:'请输入员工ID', trigger:'blur', min:1, max:255}],
         name:[{required:true, message:'请输入员工姓名', trigger:'blur'}],
         sex:[{trigger:'change'}],
         number:[{message:'请输入正确的手机号', pattern:/^1[34578]\d{9}$/, trigger:'blur'}],
@@ -433,7 +434,7 @@ export default {
       this.staff_id = rowInfo.Id
       var formdata = new FormData();
       formdata.append("staff_id",this.staff_id);
-      this.$axios.post(
+      axios._post(
         "/staff/info",formdata
       )
         .then(res => {
@@ -441,31 +442,31 @@ export default {
           if(res.staff_photo==null){
             this.photo = '../../assets/images/user-default.png'
           }
-          else {this.photo = res.data.staff_photo}
+          else {this.photo = res.staff_photo}
 
-          this.name = res.data.staff_name,
-          this.gender = res.data.staff_sex,
-          this.num = res.data.staff_id,
-          this.account = res.data.staff_account,
-          this.password = res.data.staff_password,
-          this.birth = res.data.staff_birthday,
-          this.nation = res.data.staff_nation,
-          this.nativePlace = res.data.staff_native_place,
-          this.birthPlace = res.data.staff_birth_place,
-          this.politicsStatus = res.data.staff_politic,
-          this.phone = res.data.staff_phone,
-          this.email = res.data.staff_email,
-          this.position = res.data.staff_job,
-          this.state = res.data.staff_status,
-          this.type = res.data.staff_type,
-          this.dateOnBroad = res.data.staff_in_date,
-          this.dateOfDeparture = res.data.staff_out_date,
-          this.department = res.data.staff_department,
+          this.name = res.staff_name,
+          this.gender = res.staff_sex,
+          this.num = res.staff_id,
+          this.account = res.staff_account,
+          this.password = res.staff_password,
+          this.birth = res.staff_birthday,
+          this.nation = res.staff_nation,
+          this.nativePlace = res.staff_native_place,
+          this.birthPlace = res.staff_birth_place,
+          this.politicsStatus = res.staff_politic,
+          this.phone = res.staff_phone,
+          this.email = res.staff_email,
+          this.position = res.staff_job,
+          this.state = res.staff_status,
+          this.type = res.staff_type,
+          this.dateOnBroad = res.staff_in_date,
+          this.dateOfDeparture = res.staff_out_date,
+          this.department = res.staff_department,
           //this.performance = res.data.performance,
           //this.checkIn = res.data.checkIn,
-          this.salary = res.data.staff_wage,
-          this.holiday = res.data.staff_annual_leave,
-          this.authority = res.data.staff_permission
+          this.salary = res.staff_wage,
+          this.holiday = res.staff_annual_leave,
+          this.authority = res.staff_permission
       })
       .catch(err => {
         this.$notify({ title: '错误', message: err, type: 'warning' })
@@ -486,8 +487,7 @@ export default {
               Id: item.Id,
             };
             let url = "/stuff/delete";
-            this.$axios
-              .post(url, qs.stringify(params))
+            axios._post(url, qs.stringify(params))
               .then((successResponse) => {
                 this.tableData.splice(index, 1);
                 this.$message.success("删除成功");
@@ -532,7 +532,7 @@ export default {
                     staff_birthPlace: item.birthPlace,
                     staff_politic: item.politics,
                     staff_email: item.email,
-                    staff_job: item.job,
+                    // staff_job: item.job,
                     staff_status: item.state,
                     staff_photo: item.photo,
                     staff_type:item.type,
@@ -542,8 +542,8 @@ export default {
                     staff_annual_leave: item.holiday
                   };
                   let url = "/staff/update";
-                  this.$axios
-                    .post(url, qs.stringify(params))
+                  axios
+                    ._post(url, qs.stringify(params))
                     .then((successResponse) => {
                       alert("修改成功");
                     })
@@ -578,8 +578,8 @@ export default {
                 weight: this.newObject.weight,
               };
               let url = "/stuff/add";
-              this.$axios
-                .post(url, qs.stringify(params))
+              axios
+                ._post(url, qs.stringify(params))
                 .then((successResponse) => {
                   alert("新增成功");
                 })

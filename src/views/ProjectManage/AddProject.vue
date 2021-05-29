@@ -395,14 +395,13 @@ export default {
       for (var key in this.operateForm) {
           formdata.append(key, this.operateForm[key])
       }
-      console.log(this.fileList)
+      // console.log(this.fileList)
       if (this.fileList.length != 0) {
         for (var file of this.fileList) {
           formdata.append("files", file.raw, file.raw.name)
         }
         this.fileList = []
       }
-
       axios._post('/project/insert', formdata).then(res => {
         this.$message.success("新建项目成功！");
       this.$router.push({path:'/project/finance'})

@@ -101,7 +101,7 @@ export const oExport = (url) => {
   })
 };
 const DEFAULT_URL="http://localhost:8080"
-// const DEFAULT_URL="http://8.129.86.121:80"
+// const DEFAULT_URL="http://8.129.86.121:8080"
 export default {
   _get (url) {
     return oGet(DEFAULT_URL+url);
