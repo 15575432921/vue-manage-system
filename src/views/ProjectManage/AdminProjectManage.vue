@@ -214,7 +214,7 @@ export default {
             }
             else if (this.if_issued == '2')
             {
-              this.tableData[i]["issue_state"] = '部门通过';
+              this.tableData[i]["issue_state"] = '总审通过';
             }
             else
             {

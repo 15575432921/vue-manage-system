@@ -45,8 +45,8 @@
             <el-button size="mini" type="info" v-else disabled>编辑</el-button>
           </div>
           <div>
-            <el-button size="mini" type="success" @click="handlePass(scope.row)" v-if="scope.row['if_issued'] === '0'">通过</el-button>
-            <el-button size="mini" type="info" v-else disabled>通过</el-button>
+            <el-button size="mini" type="success" @click="handlePass(scope.row)" v-if="scope.row['if_issued'] === '0'">提交 </el-button>
+            <el-button size="mini" type="info" v-else disabled>提交</el-button>
           </div>
           <div>
             <el-button size="mini" type="danger" @click="handleRefuse(scope.row)" v-if="scope.row['if_issued'] === '0'">退回</el-button>

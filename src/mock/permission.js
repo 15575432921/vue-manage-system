@@ -42,23 +42,51 @@ export default {
                                         name: 'engineering',
                                         label: '工程审计',
                                         icon: 'document',
-                                        url: 'ProjectManage/ProjectManage'
+                                        url: 'ProjectManage/EngineeringManage'
                                     },
                                     {
                                         path: '/project/taxation',
                                         name: 'taxation',
                                         label: '税务审计',
                                         icon: 'document',
-                                        url: 'ProjectManage/ProjectManage'
+                                        url: 'ProjectManage/TaxationManage'
+                                    },
+                                    {
+                                        path: "/archive",
+                                        name: "归档管理",
+                                        label: "归档管理",
+                                        icon: "files",
+                                        url: 'ArchiveManage/ArchiveManage'
+                                    },
+                                    {
+                                        path: "/sta",
+                                        name: "统计查询",
+                                        label: "统计查询",
+                                        icon: "picture",
+                                        url: "StatisticManage/StatisticManage"
                                     },
                                 ]
                             },
                             {
-                                path: '/addproject',
-                                name: 'addProject',
-                                label: '新增项目',
+                                path: '/addfinance',
+                                name: 'addFinance',
+                                label: '新增财务审计',
                                 hidden: true,
-                                url: 'ProjectManage/AddProject'
+                                url: 'ProjectManage/AddFinance'
+                            },
+                            {
+                                path: '/addengineering',
+                                name: 'addEngineering',
+                                label: '新增工程审计',
+                                hidden: true,
+                                url: 'ProjectManage/AddEngineering'
+                            },
+                            {
+                                path: '/addtaxation',
+                                name: 'addTaxation',
+                                label: '新增税务审计',
+                                hidden: true,
+                                url: 'ProjectManage/AddTaxation'
                             },
                             {
                                 path: "/file",
@@ -87,20 +115,6 @@ export default {
                                 label: "投标管理",
                                 icon: "position",
                                 url: 'TenderManage/TenderManage'
-                            },
-                            {
-                                path: "/archive",
-                                name: "归档管理",
-                                label: "归档管理",
-                                icon: "files",
-                                url: 'ArchiveManage/ArchiveManage'
-                            },
-                            {
-                                path: "/sta",
-                                name: "统计功能",
-                                label: "统计功能",
-                                icon: "picture",
-                                url: "StatisticManage/StatisticManage"
                             },
                         ],
                         token: Mock.Random.guid(),
@@ -135,18 +149,32 @@ export default {
                                         url: 'ProjectManage/AuditProjectManage'
                                     },
                                     {
-                                        path: '/check/engineering',
+                                        path: '/project/engineering',
                                         name: 'engineering',
                                         label: '工程审计',
                                         icon: 'document',
-                                        url: 'ProjectManage/AuditProjectManage'
+                                        url: 'ProjectManage/AuditEngineeringManage'
                                     },
                                     {
-                                        path: '/check/taxation',
+                                        path: '/project/taxation',
                                         name: 'taxation',
                                         label: '税务审计',
                                         icon: 'document',
-                                        url: 'ProjectManage/AuditProjectManage'
+                                        url: 'ProjectManage/AuditTaxationManage'
+                                    },
+                                    {
+                                        path: "/archive",
+                                        name: "归档管理",
+                                        label: "归档管理",
+                                        icon: "files",
+                                        url: 'ArchiveManage/ArchiveManage'
+                                    },
+                                    {
+                                        path: "/sta",
+                                        name: "统计查询",
+                                        label: "统计查询",
+                                        icon: "picture",
+                                        url: "StatisticManage/StatisticManage"
                                     },
                                 ]
                             },
@@ -177,20 +205,6 @@ export default {
                                 label: "投标管理",
                                 icon: "position",
                                 url: 'TenderManage/AuditTenderManage'
-                            },
-                            {
-                                path: "/archive",
-                                name: "归档管理",
-                                label: "归档管理",
-                                icon: "files",
-                                url: 'ArchiveManage/ArchiveManage'
-                            },
-                            {
-                                path: "/sta",
-                                name: "统计功能",
-                                label: "统计功能",
-                                icon: "picture",
-                                url: "StatisticManage/StatisticManage"
                             },
                         ],
                         token: Mock.Random.guid(),
@@ -230,14 +244,28 @@ export default {
                                         name: 'engineering',
                                         label: '工程审计',
                                         icon: 'document',
-                                        url: 'ProjectManage/GlobalAuditProjectManage'
+                                        url: 'ProjectManage/GlobalAuditEngineeringManage'
                                     },
                                     {
                                         path: '/check/taxation',
                                         name: 'taxation',
                                         label: '税务审计',
                                         icon: 'document',
-                                        url: 'ProjectManage/GlobalAuditProjectManage'
+                                        url: 'ProjectManage/GlobalAuditTaxationManage'
+                                    },
+                                    {
+                                        path: "/archive",
+                                        name: "归档管理",
+                                        label: "归档管理",
+                                        icon: "files",
+                                        url: 'ArchiveManage/ArchiveManage'
+                                    },
+                                    {
+                                        path: "/sta",
+                                        name: "统计查询",
+                                        label: "统计查询",
+                                        icon: "picture",
+                                        url: "StatisticManage/StatisticManage"
                                     },
                                 ]
                             },
@@ -268,20 +296,6 @@ export default {
                                 label: "投标管理",
                                 icon: "position",
                                 url: 'TenderManage/AuditTenderManage'
-                            },
-                            {
-                                path: "/archive",
-                                name: "归档管理",
-                                label: "归档管理",
-                                icon: "files",
-                                url: 'ArchiveManage/ArchiveManage'
-                            },
-                            {
-                                path: "/sta",
-                                name: "统计功能",
-                                label: "统计功能",
-                                icon: "picture",
-                                url: "StatisticManage/StatisticManage"
                             },
                         ],
                         token: Mock.Random.guid(),
@@ -353,11 +367,12 @@ export default {
                             },
                             {
                                 path: "/sta",
-                                name: "统计功能",
-                                label: "统计功能",
+                                name: "统计查询",
+                                label: "统计查询",
                                 icon: "picture",
                                 url: "StatisticManage/StatisticManage"
                             },
+
                         ],
                         token: Mock.Random.guid(),
                         message: '获取成功'

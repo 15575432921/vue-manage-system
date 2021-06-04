@@ -2,23 +2,23 @@
   <div class="app-container">
     <el-form label-width="140px" style="width: 90%;" :rules="rules" :model="operateForm">
       <el-form-item label-width="0px">
-      <el-col :span="12">
-        <el-form-item label="项目编号" prop="project_code">
-          <el-input
-              v-model="operateForm.project_code"
-              placeholder="请输入项目编号"
-          ></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="12">
-        <el-form-item label="项目名称" prop="project_name">
-          <el-input
-              v-model="operateForm.project_name"
-              placeholder="请输入项目名称"
-          >
-          </el-input>
-        </el-form-item>
-      </el-col>
+        <el-col :span="12">
+          <el-form-item label="项目编号" prop="project_code">
+            <el-input
+                v-model="operateForm.project_code"
+                placeholder="请输入项目编号"
+            ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="项目名称" prop="project_name">
+            <el-input
+                v-model="operateForm.project_name"
+                placeholder="请输入项目名称"
+            >
+            </el-input>
+          </el-form-item>
+        </el-col>
       </el-form-item>
       <el-form-item label="审计大类" prop="project_type">
         <el-select
@@ -64,92 +64,92 @@
       </el-form-item>
       <el-form-item label-width="0px">
         <el-col :span="12">
-      <el-form-item label="质控负责人" prop="project_qualitycontroler">
+          <el-form-item label="质控负责人" prop="project_qualitycontroler">
 
-        <el-input
-            v-model="operateForm.project_qualitycontroler"
-            placeholder="请输入质控负责人"
-        ></el-input>
+            <el-input
+                v-model="operateForm.project_qualitycontroler"
+                placeholder="请输入质控负责人"
+            ></el-input>
 
-      </el-form-item>
+          </el-form-item>
         </el-col>
         <el-col :span="12">
-      <el-form-item label="项目负责人" prop="project_head">
-        <el-input
-            v-model="operateForm.project_head"
-            placeholder="请输入项目负责人"
-        ></el-input>
-      </el-form-item>
+          <el-form-item label="项目负责人" prop="project_head">
+            <el-input
+                v-model="operateForm.project_head"
+                placeholder="请输入项目负责人"
+            ></el-input>
+          </el-form-item>
         </el-col>
       </el-form-item>
       <el-form-item label-width="0px"  style="width: 50%;">
         <el-col :span="12">
-      <el-form-item label="项目开始时间" prop="project_starttime">
-        <el-date-picker
-            v-model="operateForm.project_starttime"
-            type="date"
-            placeholder="选择项目开始时间"
-            value-format="yyyy-MM-dd"
-            style="width: 100%;"
-        >
-        </el-date-picker>
-      </el-form-item>
+          <el-form-item label="项目开始时间" prop="project_starttime">
+            <el-date-picker
+                v-model="operateForm.project_starttime"
+                type="date"
+                placeholder="选择项目开始时间"
+                value-format="yyyy-MM-dd"
+                style="width: 100%;"
+            >
+            </el-date-picker>
+          </el-form-item>
         </el-col>
         <el-col :span="12">
-      <el-form-item label="项目结束时间" prop="project_endtime">
-        <el-date-picker
-            v-model="operateForm.project_endtime"
-            type="date"
-            placeholder="选择项目结束时间"
-            value-format="yyyy-MM-dd"
-            style="width: 100%;"
-        >
-        </el-date-picker>
-      </el-form-item>
+          <el-form-item label="项目结束时间" prop="project_endtime">
+            <el-date-picker
+                v-model="operateForm.project_endtime"
+                type="date"
+                placeholder="选择项目结束时间"
+                value-format="yyyy-MM-dd"
+                style="width: 100%;"
+            >
+            </el-date-picker>
+          </el-form-item>
         </el-col>
       </el-form-item>
       <el-form-item label-width="0px">
         <el-col :span="12">
-      <el-form-item label="项目合伙人" prop="project_partner">
-        <el-input
-            v-model="operateForm.project_partner"
-            placeholder="请输入项目合伙人"
-        ></el-input>
-      </el-form-item>
+          <el-form-item label="项目合伙人" prop="project_partner">
+            <el-input
+                v-model="operateForm.project_partner"
+                placeholder="请输入项目合伙人"
+            ></el-input>
+          </el-form-item>
         </el-col>
         <el-col :span="12">
-      <el-form-item label="组员" prop="project_members">
-        <el-input
-            v-model="operateForm.project_members"
-            placeholder="请输入组员"
-        ></el-input>
-      </el-form-item>
+          <el-form-item label="组员" prop="project_members">
+            <el-input
+                v-model="operateForm.project_members"
+                placeholder="请输入组员"
+            ></el-input>
+          </el-form-item>
         </el-col>
       </el-form-item>
       <el-form-item label-width="0px">
         <el-col :span="8">
-      <el-form-item label="签字注册会计师" prop="project_accountant">
-        <el-input
-            v-model="operateForm.project_accountant"
-            placeholder="请输入签字注册会计师"
-        ></el-input>
-      </el-form-item>
+          <el-form-item label="签字注册会计师" prop="project_accountant">
+            <el-input
+                v-model="operateForm.project_accountant"
+                placeholder="请输入签字注册会计师"
+            ></el-input>
+          </el-form-item>
         </el-col>
         <el-col :span="8">
-      <el-form-item label="签字注册造价师" prop="project_costengineer">
-        <el-input
-            v-model="operateForm.project_costengineer"
-            placeholder="请输入签字注册造价师"
-        ></el-input>
-      </el-form-item>
+          <el-form-item label="签字注册造价师" prop="project_costengineer">
+            <el-input
+                v-model="operateForm.project_costengineer"
+                placeholder="请输入签字注册造价师"
+            ></el-input>
+          </el-form-item>
         </el-col>
         <el-col :span="8">
-      <el-form-item label="签字税务师" prop="project_taxaccountant">
-        <el-input
-            v-model="operateForm.project_taxaccountant"
-            placeholder="请输入签字税务师"
-        ></el-input>
-      </el-form-item>
+          <el-form-item label="签字税务师" prop="project_taxaccountant">
+            <el-input
+                v-model="operateForm.project_taxaccountant"
+                placeholder="请输入签字税务师"
+            ></el-input>
+          </el-form-item>
         </el-col>
       </el-form-item>
       <el-form-item label="报告意见类型" prop="project_comment">
@@ -166,42 +166,42 @@
       </el-form-item>
       <el-form-item label-width="0px">
         <el-col :span="8">
-      <el-form-item label="资产总额（万元）" prop="project_assets">
-        <el-input
-            v-model="operateForm.project_assets"
-            placeholder="请输入资产总额（万元）"
-        ></el-input>
-      </el-form-item>
+          <el-form-item label="资产总额（万元）" prop="project_assets">
+            <el-input
+                v-model="operateForm.project_assets"
+                placeholder="请输入资产总额（万元）"
+            ></el-input>
+          </el-form-item>
         </el-col>
         <el-col :span="8">
-      <el-form-item label="审定金额（万元）" prop="project_audit">
-        <el-input
-            v-model="operateForm.project_audit"
-            placeholder="请输入审定金额（万元）"
-        ></el-input>
-      </el-form-item>
+          <el-form-item label="审定金额（万元）" prop="project_audit">
+            <el-input
+                v-model="operateForm.project_audit"
+                placeholder="请输入审定金额（万元）"
+            ></el-input>
+          </el-form-item>
         </el-col>
         <el-col :span="8">
-      <el-form-item label="审减金额（万元）" prop="project_reduction">
-        <el-input
-            v-model="operateForm.project_reduction"
-            placeholder="请输入审减金额（万元）"
-        ></el-input>
-      </el-form-item>
+          <el-form-item label="审减金额（万元）" prop="project_reduction">
+            <el-input
+                v-model="operateForm.project_reduction"
+                placeholder="请输入审减金额（万元）"
+            ></el-input>
+          </el-form-item>
         </el-col>
       </el-form-item>
-<!--      <el-form-item label="部门审核意见">-->
-<!--      <el-input-->
-<!--          v-model="operateForm.project_departmentmanager"-->
-<!--          placeholder="请输入部门审核意见"-->
-<!--      ></el-input>-->
-<!--    </el-form-item>-->
-<!--      <el-form-item label="总经理审核意见">-->
-<!--        <el-input-->
-<!--            v-model="operateForm.project_generalmanager"-->
-<!--            placeholder="请输入总经理审核意见"-->
-<!--        ></el-input>-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="部门审核意见">-->
+      <!--      <el-input-->
+      <!--          v-model="operateForm.project_departmentmanager"-->
+      <!--          placeholder="请输入部门审核意见"-->
+      <!--      ></el-input>-->
+      <!--    </el-form-item>-->
+      <!--      <el-form-item label="总经理审核意见">-->
+      <!--        <el-input-->
+      <!--            v-model="operateForm.project_generalmanager"-->
+      <!--            placeholder="请输入总经理审核意见"-->
+      <!--        ></el-input>-->
+      <!--      </el-form-item>-->
       <el-form-item label="上传文件" style="width: 50%;">
         <el-upload
             class="upload-demo"
@@ -266,7 +266,7 @@ export default {
     return {
       operateForm: {
         project_code: '',
-        project_type: '',
+        project_type: '工程审计',
         project_name: '',
         project_client: '',
         project_reportnumber: '',
@@ -285,8 +285,6 @@ export default {
         project_assets: '',
         project_audit: '',
         project_reduction: '',
-        // project_departmentmanager:'',
-        // project_generalmanager:''
       },
       rules: {
         project_code: [
@@ -301,9 +299,9 @@ export default {
           { required: true, message: '请输入项目类型', trigger: 'blur' },
           { min: 4, max: 255, message: '项目类型长度需要在 4 到 255 个字符', trigger: 'blur' }
         ],
-        project_type: [
-          { type: "enum", enum: ['财务审计', '工程审计', '税务审计'], required: true, message: '请选择项目类型：财务审计，工程审计或税务审计', trigger: 'blur' }
-        ],
+        // project_type: [
+        //   { type: "enum", enum: ['财务审计', '工程审计', '税务审计'], required: true, message: '请选择项目类型：财务审计，工程审计或税务审计', trigger: 'blur' }
+        // ],
         project_client: [
           { required: true, message: '请输入客户名称', trigger: 'blur' },
           { max: 255, message: '客户名称长度最多 255 个字符', trigger: 'blur' }
@@ -327,7 +325,7 @@ export default {
           { required: true, message: '请输入项目结束时间', trigger: 'blur' },
         ],
         project_assets:[
-          { validator: isPriceValidator, message: '资产总额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
+          { validator: isPriceValidator, message: '送审金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
         ],
         project_audit:[
           { validator: isPriceValidator, message: '审定金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
@@ -393,7 +391,7 @@ export default {
 
       let formdata = new FormData();
       for (var key in this.operateForm) {
-          formdata.append(key, this.operateForm[key])
+        formdata.append(key, this.operateForm[key])
       }
       // console.log(this.fileList)
       if (this.fileList.length != 0) {
@@ -404,7 +402,7 @@ export default {
       }
       axios._post('/project/insert', formdata).then(res => {
         this.$message.success("新建项目成功！");
-      this.$router.push({path:'/project/finance'})
+        this.$router.push({path:'/project/engineering'})
       }, err => {
         alert("Add Error!");
         this.$message({

@@ -231,11 +231,11 @@ export default {
         },
         {
           prop: 'project_departmentmanager',
-          label: '部门审核意见',
+          label: '总审审核意见',
         },
         {
           prop: 'project_generalmanager',
-          label: '总经理审核意见',
+          label: '合伙人审核意见',
         }
 
       ],
@@ -369,19 +369,19 @@ export default {
         },
         {
           model: 'project_departmentmanager',
-          label: '部门审核意见'
+          label: '总审审核意见'
         },
         {
           model: 'project_generalmanager',
-          label: '总经理审核意见'
+          label: '合伙人审核意见'
         }
       ],
       rules: {
         project_departmentmanager: [
-          { message: '请输入部门审核意见'},
+          { message: '请输入总审审核意见'},
         ],
         project_project_generalmanager: [
-          { message: '请输入总经理审核意见'},
+          { message: '请输入合伙人审核意见'},
         ],
         project_code: [
           { required: true, message: '请输入项目编号', trigger: 'blur' },
@@ -584,7 +584,7 @@ export default {
             }
             else if (this.if_issued == '2')
             {
-              this.tableData[i]["issue_state"] = '部门通过';
+              this.tableData[i]["issue_state"] = '总审通过';
             }
             else
             {
@@ -608,7 +608,7 @@ export default {
       this.operateForm = row
     },
     passProject (row) {
-      this.$confirm("此操作将审核通过该项目, 是否继续?", "提示", {
+      this.$confirm("此操作将提交该项目, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"

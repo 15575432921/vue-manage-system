@@ -70,9 +70,9 @@ export default {
       btnDisabled: false,
       // chart: null,
       title: '',
-      xData: ['一月', '二月', '三月', '四月', '五月', '六月', '七月','八月', '九月', '十月','十一月','十二月','一月', '二月', '三月', '四月'],
-      yData: [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4],
-      end:100*12/16
+      xData: [],
+      yData: [],
+      end:1200
     }
   },
   methods: {
@@ -86,16 +86,15 @@ export default {
        // axios._post("http://8.129.86.121:80/sta/getAll",this.searchObj).then(res=>{
       axios._post("/sta/getAll",this.searchObj).then(res=>{
         this.$message.success("获取文档列表成功！")
-         this.yData = res
-        let n=res.length
+        this.xData = res.xData
+         this.yData = res.yData
+        let n=this.xData.length
         if(n>12)
           this.end=1200/n;
         this.setBarChart()
-        this.setPieChart()
+        // this.setPieChart()
       }).catch()
       {
-        this.setBarChart()
-        this.setPieChart()
       }
 
     },

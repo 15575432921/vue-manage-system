@@ -225,11 +225,11 @@ export default {
         },
         {
           prop: 'project_departmentmanager',
-          label: '部门审核意见',
+          label: '总审审核意见',
         },
         {
           prop: 'project_generalmanager',
-          label: '总经理审核意见',
+          label: '合伙人审核意见',
         }
       ],
       config: {
@@ -520,7 +520,7 @@ export default {
             }
             else if (this.if_issued == '2')
             {
-              this.tableData[i]["issue_state"] = '部门通过';
+              this.tableData[i]["issue_state"] = '总审通过';
             }
             else
             {
@@ -545,7 +545,7 @@ export default {
       // this.operateType = 'add'
       // this.isShow = true
 
-       this.$router.push({ path: '/addproject' })
+       this.$router.push({ path: '/addfinance' })
     },
     editRow (row) {
       this.operateType = 'edit'
