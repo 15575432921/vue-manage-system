@@ -1,42 +1,50 @@
 <template>
   <div class="app-container">
     <!--表单-->
-    <el-form :inline="true" class="demo-form-inline">
+    <el-form :inline="true" class="demo-form-inline" :rules="rules" :model="searchObj"  >
 
-      <el-form-item>
-        <el-select v-model="searchObj.type" clearable placeholder="请选择">
-          <el-option label="项目" value="project"/>
-          <el-option label="文档" value="file"/>
-          <el-option label="合同" value="contract"/>
-          <el-option label="投标" value="tender"/>
-        </el-select>
-      </el-form-item>
+      <!--      <el-form-item>-->
+      <!--        <el-select v-model="searchObj.type" clearable placeholder="请选择">-->
+      <!--          <el-option label="项目" value="project"/>-->
+      <!--          <el-option label="文档" value="file"/>-->
+      <!--          <el-option label="合同" value="contract"/>-->
+      <!--          <el-option label="投标" value="tender"/>-->
+      <!--        </el-select>-->
+      <!--      </el-form-item>-->
 
-      <el-form-item>
+      <el-form-item prop="begin" label="开始日期">
         <el-date-picker
             v-model="searchObj.begin"
             type="date"
             placeholder="选择开始日期"
             value-format="yyyy-MM-dd"/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="end" label="截止日期">
         <el-date-picker
             v-model="searchObj.end"
             type="date"
             placeholder="选择截止日期"
             value-format="yyyy-MM-dd"/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="经办人">
         <el-input
             v-model="searchObj.projectHead" placeholder="请输入经办人"
         >
         </el-input>
       </el-form-item>
-      <el-form-item>
-        <el-select v-model="searchObj.projectClass" clearable placeholder="请选择项目类型">
+      <el-form-item label="项目类型">
+        <el-select v-model="searchObj.projectType" clearable placeholder="请选择项目类型">
           <el-option label="财务审计" value="财务审计"/>
           <el-option label="工程审计" value="工程审计"/>
           <el-option label="税务审计" value="税务审计"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="审核状态">
+        <el-select v-model="searchObj.if_issued" clearable placeholder="请选择">
+          <el-option label="待审核" value="0"/>
+          <el-option label="被退回" value="1"/>
+          <el-option label="总审通过" value="2"/>
+          <el-option label="合伙人通过" value="3"/>
         </el-select>
       </el-form-item>
       <el-button
@@ -56,23 +64,33 @@
 
 <script>
 import echarts from 'echarts'
-import axios  from '../../axios/ajax'
+import axios from '../../axios/ajax'
+
 export default {
   data() {
     return {
       searchObj: {
-        type: '',
+        type: 'project',
         begin: '',
         end: '',
         projectHead: '',
-        projectClass: ''
+        projectType: '',
+        if_issued: ''
+      },
+      rules: {
+        begin: [
+          {required: true, message: '请选择开始日期', trigger: 'blur'},
+        ],
+        end: [
+          {required: true, message: '请选择截止日期', trigger: 'blur'},
+        ]
       },
       btnDisabled: false,
       // chart: null,
       title: '',
       xData: [],
       yData: [],
-      end:1200
+      end: 1200
     }
   },
   methods: {
@@ -83,14 +101,14 @@ export default {
     // 准备图表数据
     initChartData() {
       console.log(this.searchObj);
-       // axios._post("http://8.129.86.121:80/sta/getAll",this.searchObj).then(res=>{
-      axios._post("/sta/getAll",this.searchObj).then(res=>{
+      // axios._post("http://8.129.86.121:80/sta/getAll",this.searchObj).then(res=>{
+      axios._post("/sta/getAll", this.searchObj).then(res => {
         this.$message.success("获取文档列表成功！")
         this.xData = res.xData
-         this.yData = res.yData
-        let n=this.xData.length
-        if(n>12)
-          this.end=1200/n;
+        this.yData = res.yData
+        let n = this.xData.length
+        if (n > 12)
+          this.end = 1200 / n;
         this.setBarChart()
         // this.setPieChart()
       }).catch()
