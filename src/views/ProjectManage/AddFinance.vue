@@ -128,18 +128,18 @@
       </el-form-item>
       <el-form-item label-width="0px">
         <el-col :span="12">
-      <el-form-item label="签字税务师1" prop="project_accountant">
+      <el-form-item label="签字注册会计师1" prop="project_accountant">
         <el-input
             v-model="operateForm.project_accountant"
-            placeholder="请输入签字税务师1"
+            placeholder="请输入签字注册会计师1"
         ></el-input>
       </el-form-item>
         </el-col>
         <el-col :span="12">
-      <el-form-item label="签字税务师2" prop="project_costengineer">
+      <el-form-item label="签字注册会计师2" prop="project_costengineer">
         <el-input
             v-model="operateForm.project_costengineer"
-            placeholder="请输入签字税务师2"
+            placeholder="请输入签字注册会计师2"
         ></el-input>
       </el-form-item>
         </el-col>
@@ -266,7 +266,7 @@ export default {
     return {
       operateForm: {
         project_code: '',
-        project_type: '税务审计',
+        project_type: '财务审计',
         project_name: '',
         project_client: '',
         project_reportnumber: '',
@@ -325,10 +325,12 @@ export default {
           { required: true, message: '请输入项目结束时间', trigger: 'blur' },
         ],
         project_assets:[
-          { validator: isPriceValidator, message: '送审金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
+          { required: true, message: '请输入送审金额', trigger: 'blur' },
+          { validator: isPriceValidator, message: '送审金额需输入数字（万元）', trigger: 'blur'}
         ],
         project_audit:[
-          { validator: isPriceValidator, message: '审定金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
+          { required: true, message: '请输入审定金额', trigger: 'blur' },
+          { validator: isPriceValidator, message: '审定金额需输入数字（万元）', trigger: 'blur'}
         ],
         // project_reduction:[
         //   { validator: isPriceValidator, message: '审减金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}

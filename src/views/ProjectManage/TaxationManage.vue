@@ -265,25 +265,6 @@ export default {
           model: 'project_name',
           label: '项目名称'
         },
-        // {
-        //   model: 'project_type',
-        //   label: '审计大类类型',
-        //   type: 'select',
-        //   opts: [
-        //     {
-        //       label: '财务审计',
-        //       value: '财务审计'
-        //     },
-        //     {
-        //       label: '工程审计',
-        //       value: '工程审计'
-        //     },
-        //     {
-        //       label: '税务审计',
-        //       value: '税务审计'
-        //     },
-        //   ]
-        // },
         {
           model: 'project_class',
           label: '项目类型'
@@ -390,10 +371,12 @@ export default {
           { required: true, message: '请输入项目结束时间', trigger: 'blur' },
         ],
         project_assets:[
-          { validator: isPriceValidator, message: '送审金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
+          { required: true, message: '请输入送审金额', trigger: 'blur' },
+          { validator: isPriceValidator, message: '送审金额需输入数字（万元）', trigger: 'blur'}
         ],
         project_audit:[
-          { validator: isPriceValidator, message: '审定金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
+          { required: true, message: '请输入审定金额', trigger: 'blur' },
+          { validator: isPriceValidator, message: '审定金额需输入数字（万元）', trigger: 'blur'}
         ],
         // project_reduction:[
         //   { validator: isPriceValidator, message: '审减金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
@@ -479,7 +462,7 @@ export default {
     getList (name = '') {
       this.config.loading = true
       name ? (this.config.page = 1) : ''
-      axios._get("/project/getAllProject").then(res => {
+      axios._get("/project/getAllProject?projectType=税务审计").then(res => {
         this.$message.success("获取项目列表成功！")
         this.tableData = res;
 
@@ -517,7 +500,6 @@ export default {
             else
             {
               this.tableData[i]["issue_state"] = '已通过';
-              // this.tableData.splice(i,1);
             }
           }
         }
@@ -614,35 +596,6 @@ export default {
               alert("Update Error!");
               this.$message({
                 message: "更新项目失败",
-                type: "error"
-              });
-            })
-          }
-          else if (this.operateType === 'add')
-          {
-            let formdata = new FormData();
-            for (var key3 in this.operateForm) {
-              if (key3 != "issue_state" && key3 != "submit_state")
-              {
-                formdata.append(key3, this.operateForm[key3])
-              }
-            }
-
-            if (this.fileList.length != 0) {
-              for(var file of this.fileList){
-                formdata.append("files", file.raw,file.raw.name)
-              }
-              this.fileList=[]
-            }
-
-            axios._post('/project/insert', formdata).then(res => {
-              this.$message.success("新建项目成功！");
-              this.isShow = false
-              this.getList()
-            }, err => {
-              alert("Add Error!");
-              this.$message({
-                message: "新建项目失败",
                 type: "error"
               });
             })

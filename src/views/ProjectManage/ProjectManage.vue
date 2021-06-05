@@ -122,10 +122,10 @@ export default {
           prop: 'project_code',
           label: '项目编号',
         },
-        {
-          prop: 'project_type',
-          label: '审计大类类型',
-        },
+        // {
+        //   prop: 'project_type',
+        //   label: '审计大类类型',
+        // },
         {
           prop: 'project_name',
           label: '项目名称'
@@ -160,16 +160,16 @@ export default {
         },
         {
           prop: 'project_accountant',
-          label: '签字注册会计师',
+          label: '签字注册会计师1',
         },
         {
           prop: 'project_costengineer',
-          label: '签字注册造价师',
+          label: '签字注册会计师2',
         },
-        {
-          prop: 'project_taxaccountant',
-          label: '签字税务师',
-        },
+        // {
+        //   prop: 'project_taxaccountant',
+        //   label: '签字税务师',
+        // },
         {
           prop: 'project_comment',
           label: '报告意见类型',
@@ -182,13 +182,13 @@ export default {
           prop: 'project_endtime',
           label: '项目结束时间'
         },
-        {
-          prop: 'project_construction',
-          label: '施工单位',
-        },
+        // {
+        //   prop: 'project_construction',
+        //   label: '施工单位',
+        // },
         {
           prop: 'project_assets',
-          label: '资产总额(万元)',
+          label: '送审金额(万元)',
           width: 160
         },
         {
@@ -328,36 +328,36 @@ export default {
         },
         {
           model: 'project_accountant',
-          label: '签字注册会计师'
+          label: '签字注册会计师1'
         },
         {
           model: 'project_costengineer',
-          label: '签字注册造价师'
+          label: '签字注册会计师2'
         },
-        {
-          model: 'project_taxaccountant',
-          label: '签字税务师'
-        },
+        // {
+        //   model: 'project_taxaccountant',
+        //   label: '签字税务师'
+        // },
         {
           model: 'project_comment',
           label: '报告意见类型'
         },
-        {
-          model: 'project_construction',
-          label: '施工单位'
-        },
+        // {
+        //   model: 'project_construction',
+        //   label: '施工单位'
+        // },
         {
           model: 'project_assets',
-          label: '资产总额（万元）'
+          label: '送审金额（万元）'
         },
         {
           model: 'project_audit',
           label: '审定金额（万元）'
         },
-        {
-          model: 'project_reduction',
-          label: '审减金额（万元）'
-        }
+        // {
+        //   model: 'project_reduction',
+        //   label: '审减金额（万元）'
+        // }
       ],
       rules: {
         project_code: [
@@ -372,9 +372,9 @@ export default {
           { required: true, message: '请输入项目类型', trigger: 'blur' },
           { min: 4, max: 255, message: '项目类型长度需要在 4 到 255 个字符', trigger: 'blur' }
         ],
-        project_type: [
-          { type: "enum", enum: ['财务审计', '工程审计', '税务审计'], required: true, message: '请选择项目类型：财务审计，工程审计或税务审计', trigger: 'blur' }
-        ],
+        // project_type: [
+        //   { type: "enum", enum: ['财务审计', '工程审计', '税务审计'], required: true, message: '请选择项目类型：财务审计，工程审计或税务审计', trigger: 'blur' }
+        // ],
         project_client: [
           { required: true, message: '请输入客户名称', trigger: 'blur' },
           { max: 255, message: '客户名称长度最多 255 个字符', trigger: 'blur' }
@@ -398,13 +398,12 @@ export default {
           { required: true, message: '请输入项目结束时间', trigger: 'blur' },
         ],
         project_assets:[
-          { validator: isPriceValidator, message: '资产总额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
+          { required: true, message: '请输入送审金额', trigger: 'blur' },
+          { validator: isPriceValidator, message: '送审金额需输入数字（万元）', trigger: 'blur'}
         ],
         project_audit:[
-          { validator: isPriceValidator, message: '审定金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
-        ],
-        project_reduction:[
-          { validator: isPriceValidator, message: '审减金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
+          { required: true, message: '请输入审定金额', trigger: 'blur' },
+          { validator: isPriceValidator, message: '审定金额需输入数字（万元）', trigger: 'blur'}
         ],
       },
       searchForm: {
@@ -487,7 +486,7 @@ export default {
     getList (name = '') {
       this.config.loading = true
       name ? (this.config.page = 1) : ''
-      axios._get("/project/getAllProject").then(res => {
+      axios._get("/project/getAllProject?projectType=财务审计").then(res => {
         this.$message.success("获取项目列表成功！")
         this.tableData = res;
 
@@ -626,35 +625,6 @@ export default {
                 alert("Update Error!");
                 this.$message({
                   message: "更新项目失败",
-                  type: "error"
-                });
-              })
-            }
-            else if (this.operateType === 'add')
-            {
-              let formdata = new FormData();
-              for (var key3 in this.operateForm) {
-                if (key3 != "issue_state" && key3 != "submit_state")
-                {
-                  formdata.append(key3, this.operateForm[key3])
-                }
-              }
-
-              if (this.fileList.length != 0) {
-                for(var file of this.fileList){
-                  formdata.append("files", file.raw,file.raw.name)
-                }
-                this.fileList=[]
-              }
-
-              axios._post('/project/insert', formdata).then(res => {
-                this.$message.success("新建项目成功！");
-                this.isShow = false
-                this.getList()
-              }, err => {
-                alert("Add Error!");
-                this.$message({
-                  message: "新建项目失败",
                   type: "error"
                 });
               })

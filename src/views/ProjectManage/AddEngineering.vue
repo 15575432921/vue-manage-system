@@ -20,29 +20,29 @@
           </el-form-item>
         </el-col>
       </el-form-item>
-      <el-form-item label="审计大类" prop="project_type">
-        <el-select
-            v-model="operateForm.project_type"
-            placeholder="请选择"
-        >
+<!--      <el-form-item label="审计大类" prop="project_type">-->
+<!--        <el-select-->
+<!--            v-model="operateForm.project_type"-->
+<!--            placeholder="请选择"-->
+<!--        >-->
 
-          <el-option
-              :key="'财务审计'"
-              :label="'财务审计'"
-              :value="'财务审计'"
-          ></el-option>
-          <el-option
-              :key="'工程审计'"
-              :label="'工程审计'"
-              :value="'工程审计'"
-          ></el-option>
-          <el-option
-              :key="'税务审计'"
-              :label="'税务审计'"
-              :value="'税务审计'"
-          ></el-option>
-        </el-select>
-      </el-form-item>
+<!--          <el-option-->
+<!--              :key="'财务审计'"-->
+<!--              :label="'财务审计'"-->
+<!--              :value="'财务审计'"-->
+<!--          ></el-option>-->
+<!--          <el-option-->
+<!--              :key="'工程审计'"-->
+<!--              :label="'工程审计'"-->
+<!--              :value="'工程审计'"-->
+<!--          ></el-option>-->
+<!--          <el-option-->
+<!--              :key="'税务审计'"-->
+<!--              :label="'税务审计'"-->
+<!--              :value="'税务审计'"-->
+<!--          ></el-option>-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
       <el-form-item label="项目类型" prop="project_class">
         <el-input
             v-model="operateForm.project_class"
@@ -109,14 +109,14 @@
         </el-col>
       </el-form-item>
       <el-form-item label-width="0px">
-        <el-col :span="12">
-          <el-form-item label="项目合伙人" prop="project_partner">
-            <el-input
-                v-model="operateForm.project_partner"
-                placeholder="请输入项目合伙人"
-            ></el-input>
-          </el-form-item>
-        </el-col>
+<!--        <el-col :span="12">-->
+<!--          <el-form-item label="项目合伙人" prop="project_partner">-->
+<!--            <el-input-->
+<!--                v-model="operateForm.project_partner"-->
+<!--                placeholder="请输入项目合伙人"-->
+<!--            ></el-input>-->
+<!--          </el-form-item>-->
+<!--        </el-col>-->
         <el-col :span="12">
           <el-form-item label="组员" prop="project_members">
             <el-input
@@ -127,27 +127,19 @@
         </el-col>
       </el-form-item>
       <el-form-item label-width="0px">
-        <el-col :span="8">
-          <el-form-item label="签字注册会计师" prop="project_accountant">
+        <el-col :span="12">
+          <el-form-item label="签字注册造价师1" prop="project_accountant">
             <el-input
                 v-model="operateForm.project_accountant"
-                placeholder="请输入签字注册会计师"
+                placeholder="请输入签字注册造价师1"
             ></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="签字注册造价师" prop="project_costengineer">
+        <el-col :span="12">
+          <el-form-item label="签字注册造价师2" prop="project_costengineer">
             <el-input
                 v-model="operateForm.project_costengineer"
-                placeholder="请输入签字注册造价师"
-            ></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="签字税务师" prop="project_taxaccountant">
-            <el-input
-                v-model="operateForm.project_taxaccountant"
-                placeholder="请输入签字税务师"
+                placeholder="请输入签字注册造价师2"
             ></el-input>
           </el-form-item>
         </el-col>
@@ -158,18 +150,18 @@
             placeholder="请输入报告意见类型"
         ></el-input>
       </el-form-item>
-      <el-form-item label="施工单位" prop="project_construction">
+      <el-form-item label="施工单位名称" prop="project_construction">
         <el-input
             v-model="operateForm.project_construction"
-            placeholder="请输入施工单位"
+            placeholder="请输入施工单位名称"
         ></el-input>
       </el-form-item>
       <el-form-item label-width="0px">
         <el-col :span="8">
-          <el-form-item label="资产总额（万元）" prop="project_assets">
+          <el-form-item label="送审金额（万元）" prop="project_assets">
             <el-input
                 v-model="operateForm.project_assets"
-                placeholder="请输入资产总额（万元）"
+                placeholder="请输入送审金额（万元）"
             ></el-input>
           </el-form-item>
         </el-col>
@@ -190,18 +182,6 @@
           </el-form-item>
         </el-col>
       </el-form-item>
-      <!--      <el-form-item label="部门审核意见">-->
-      <!--      <el-input-->
-      <!--          v-model="operateForm.project_departmentmanager"-->
-      <!--          placeholder="请输入部门审核意见"-->
-      <!--      ></el-input>-->
-      <!--    </el-form-item>-->
-      <!--      <el-form-item label="总经理审核意见">-->
-      <!--        <el-input-->
-      <!--            v-model="operateForm.project_generalmanager"-->
-      <!--            placeholder="请输入总经理审核意见"-->
-      <!--        ></el-input>-->
-      <!--      </el-form-item>-->
       <el-form-item label="上传文件" style="width: 50%;">
         <el-upload
             class="upload-demo"
@@ -255,6 +235,7 @@ export default {
         var reg = /^-?\d{1,252}(?:\.\d{1,3})?$/; //小数点左边最高4位，小数点右边最多4位
         if (reg.test(value))
         {
+          console.log("success")
           callback();
         }
         else
@@ -325,13 +306,16 @@ export default {
           { required: true, message: '请输入项目结束时间', trigger: 'blur' },
         ],
         project_assets:[
-          { validator: isPriceValidator, message: '送审金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
+          { required: true, message: '请输入送审金额', trigger: 'blur' },
+          { validator: isPriceValidator, message: '送审金额需输入数字（万元）', trigger: 'blur'}
         ],
         project_audit:[
-          { validator: isPriceValidator, message: '审定金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
+          { required: true, message: '请输入审定金额', trigger: 'blur' },
+          { validator: isPriceValidator, message: '审定金额需输入数字（万元）', trigger: 'blur'}
         ],
         project_reduction:[
-          { validator: isPriceValidator, message: '审减金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
+          { required: true, message: '请输入审减金额', trigger: 'blur' },
+          { validator: isPriceValidator, message: '审减金额需输入数字（万元）', trigger: 'blur'}
         ],
       },
       loadProgress: 0, // 动态显示进度条

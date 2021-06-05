@@ -20,29 +20,6 @@
           </el-form-item>
         </el-col>
       </el-form-item>
-<!--      <el-form-item label="审计大类" prop="project_type">-->
-<!--        <el-select-->
-<!--            v-model="operateForm.project_type"-->
-<!--            placeholder="请选择"-->
-<!--        >-->
-
-<!--          <el-option-->
-<!--              :key="'财务审计'"-->
-<!--              :label="'财务审计'"-->
-<!--              :value="'财务审计'"-->
-<!--          ></el-option>-->
-<!--          <el-option-->
-<!--              :key="'工程审计'"-->
-<!--              :label="'工程审计'"-->
-<!--              :value="'工程审计'"-->
-<!--          ></el-option>-->
-<!--          <el-option-->
-<!--              :key="'税务审计'"-->
-<!--              :label="'税务审计'"-->
-<!--              :value="'税务审计'"-->
-<!--          ></el-option>-->
-<!--        </el-select>-->
-<!--      </el-form-item>-->
       <el-form-item label="项目类型" prop="project_class">
         <el-input
             v-model="operateForm.project_class"
@@ -273,8 +250,6 @@ export default {
         project_assets: '',
         project_audit: '',
         project_reduction: '0',
-        // project_departmentmanager:'',
-        // project_generalmanager:''
       },
       rules: {
         project_code: [
@@ -315,10 +290,12 @@ export default {
           { required: true, message: '请输入项目结束时间', trigger: 'blur' },
         ],
         project_assets:[
-          { validator: isPriceValidator, message: '送审金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
+          { required: true, message: '请输入送审金额', trigger: 'blur' },
+          { validator: isPriceValidator, message: '送审金额需输入数字（万元）', trigger: 'blur'}
         ],
         project_audit:[
-          { validator: isPriceValidator, message: '审定金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
+          { required: true, message: '请输入审定金额', trigger: 'blur' },
+          { validator: isPriceValidator, message: '审定金额需输入数字（万元）', trigger: 'blur'}
         ],
         // project_reduction:[
         //   { validator: isPriceValidator, message: '审减金额需输入数字（万元）', trigger: 'blur', transform: (value) => Number(value)}
@@ -400,7 +377,6 @@ export default {
           type: "error"
         });
       })
-      // this.$router.push({path:'/project'})
     }
 
   },
