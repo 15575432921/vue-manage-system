@@ -604,8 +604,6 @@ export default {
               this.fileList.splice(0, 1);
               return false;
             }
-
-
             if (this.operateType === 'edit')
             {
               let formdata = new FormData();

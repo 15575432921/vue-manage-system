@@ -727,33 +727,34 @@ export default {
       this.$refs.commonForm.$children[0].validate((valid) => {
         if (valid)
         {
-          if (this.fileList.length != 0 && !this.onBeforeUpload(this.fileList[0].raw))
+          if (this.fileList.length != 0 &&!this.onBeforeUpload(this.fileList[0].raw))
           {
             this.fileList.splice(0, 1);
             return false;
           }
-
           if (this.operateType === 'edit')
           {
             let formdata = new FormData();
-            for (var key in this.operateForm) {
-              if (key != "issue_state" && key != "submit_state")
+            for (var key2 in this.operateForm) {
+              if (key2 != "issue_state" && key2 != "submit_state")
               {
-                formdata.append(key, this.operateForm[key])
+                formdata.append(key2, this.operateForm[key2])
               }
             }
 
             if (this.fileList.length != 0) {
-              formdata.append("file", this.fileList[0].raw)
-              this.fileList.splice(0, 1);
+              for(var file of this.fileList){
+                formdata.append("files", file.raw,file.raw.name)
+              }
+              this.fileList=[]
             }
 
             axios._post('/project/update', formdata).then(res => {
-              this.$message.success("更新项目成功！");
-              this.isShow = false;
+              this.$message.success("更新项目成功");
+              this.isShow = false
               this.getList()
-            }, err => {
-              alert("error!!!");
+            },err => {
+              alert("Update Error!");
               this.$message({
                 message: "更新项目失败",
                 type: "error"
