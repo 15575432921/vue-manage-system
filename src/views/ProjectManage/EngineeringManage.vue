@@ -142,10 +142,10 @@ export default {
           prop: 'project_class',
           label: '项目类型'
         },
-        {
-          prop: 'project_partner',
-          label: '项目合伙人'
-        },
+        // {
+        //   prop: 'project_partner',
+        //   label: '项目合伙人'
+        // },
         {
           prop: 'project_qualitycontroler',
           label: '质控负责人'
@@ -188,19 +188,19 @@ export default {
         },
         {
           prop: 'project_assets',
-          label: '送审金额(万元)',
+          label: '送审金额(元)',
           width: 160
         },
         {
           prop: 'project_audit',
-          label: '审定金额(万元)',
+          label: '审定金额(元)',
           width: 160
         },
-        // {
-        //   prop: 'project_reduction',
-        //   label: '审减金额(万元)',
-        //   width: 160
-        // },
+        {
+          prop: 'project_reduction',
+          label: '审减金额(元)',
+          width: 160
+        },
         {
           prop: "file_url",
           label: "下载链接",
@@ -348,15 +348,15 @@ export default {
         },
         {
           model: 'project_assets',
-          label: '送审金额（万元）'
+          label: '送审金额（元）'
         },
         {
           model: 'project_audit',
-          label: '审定金额（万元）'
+          label: '审定金额（元）'
         },
         {
           model: 'project_reduction',
-          label: '审减金额（万元）'
+          label: '审减金额（元）'
         }
       ],
       rules: {
@@ -399,15 +399,21 @@ export default {
         ],
         project_assets:[
           { required: true, message: '请输入送审金额', trigger: 'blur' },
-          { validator: isPriceValidator, message: '送审金额需输入数字（万元）', trigger: 'blur'}
+          { validator: isPriceValidator, message: '送审金额需输入数字（元）', trigger: 'blur'}
         ],
         project_audit:[
           { required: true, message: '请输入审定金额', trigger: 'blur' },
-          { validator: isPriceValidator, message: '审定金额需输入数字（万元）', trigger: 'blur'}
+          { validator: isPriceValidator, message: '审定金额需输入数字（元）', trigger: 'blur'}
         ],
         project_reduction:[
           { required: true, message: '请输入审减金额', trigger: 'blur' },
-          { validator: isPriceValidator, message: '审减金额需输入数字（万元）', trigger: 'blur'}
+          { validator: isPriceValidator, message: '审减金额需输入数字（元）', trigger: 'blur'}
+        ],
+        project_accountant: [
+          { required: true, message: '请输入签字注册造价师1', trigger: 'blur' },
+        ],
+        project_costengineer: [
+          { required: true, message: '请输入签字注册造价师2', trigger: 'blur' },
         ],
       },
       searchForm: {

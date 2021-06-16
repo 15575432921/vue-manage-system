@@ -144,12 +144,12 @@
           </el-form-item>
         </el-col>
       </el-form-item>
-      <el-form-item label="报告意见类型" prop="project_comment">
-        <el-input
-            v-model="operateForm.project_comment"
-            placeholder="请输入报告意见类型"
-        ></el-input>
-      </el-form-item>
+<!--      <el-form-item label="报告意见类型" prop="project_comment">-->
+<!--        <el-input-->
+<!--            v-model="operateForm.project_comment"-->
+<!--            placeholder="请输入报告意见类型"-->
+<!--        ></el-input>-->
+<!--      </el-form-item>-->
       <el-form-item label="施工单位名称" prop="project_construction">
         <el-input
             v-model="operateForm.project_construction"
@@ -158,26 +158,26 @@
       </el-form-item>
       <el-form-item label-width="0px">
         <el-col :span="8">
-          <el-form-item label="送审金额（万元）" prop="project_assets">
+          <el-form-item label="送审金额（元）" prop="project_assets">
             <el-input
                 v-model="operateForm.project_assets"
-                placeholder="请输入送审金额（万元）"
+                placeholder="请输入送审金额（元）"
             ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="审定金额（万元）" prop="project_audit">
+          <el-form-item label="审定金额（元）" prop="project_audit">
             <el-input
                 v-model="operateForm.project_audit"
-                placeholder="请输入审定金额（万元）"
+                placeholder="请输入审定金额（元）"
             ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="审减金额（万元）" prop="project_reduction">
+          <el-form-item label="审减金额（元）" prop="project_reduction">
             <el-input
                 v-model="operateForm.project_reduction"
-                placeholder="请输入审减金额（万元）"
+                placeholder="请输入审减金额（元）"
             ></el-input>
           </el-form-item>
         </el-col>
@@ -316,6 +316,12 @@ export default {
         project_reduction:[
           { required: true, message: '请输入审减金额', trigger: 'blur' },
           { validator: isPriceValidator, message: '审减金额需输入数字（万元）', trigger: 'blur'}
+        ],
+        project_accountant: [
+          { required: true, message: '请输入签字注册造价师1', trigger: 'blur' },
+        ],
+        project_costengineer: [
+          { required: true, message: '请输入签字注册造价师2', trigger: 'blur' },
         ],
       },
       loadProgress: 0, // 动态显示进度条

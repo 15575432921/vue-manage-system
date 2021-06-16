@@ -116,17 +116,17 @@ export default {
         },
         {
           prop: 'project_assets',
-          label: '资产总额(万元)',
+          label: '资产总额(元)',
           width: 160
         },
         {
           prop: 'project_audit',
-          label: '审定金额(万元)',
+          label: '审定金额(元)',
           width: 160
         },
         {
           prop: 'project_reduction',
-          label: '审减金额(万元)',
+          label: '审减金额(元)',
           width: 160
         },
         {
