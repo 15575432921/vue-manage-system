@@ -36,6 +36,7 @@
       >
       </el-upload>
       <div>
+
         <el-button size="small" type="primary" @click="uploadCheck">上传文件</el-button>
         <div slot="tip" class="el-upload__tip">
           请上传格式为jpeg,png,jpg,pdf,doc,docx,xls,xlsx,zip的文件
@@ -48,6 +49,7 @@
     </el-dialog>
     <div class="manage-header">
       <div>
+        <a id="exportExcel"></a>
         <el-button type="primary" @click="addRow">新增</el-button>
         <el-button type="primary" @click="exportRow">导出</el-button>
       </div>
@@ -103,6 +105,7 @@ export default {
       }
     };
     return {
+      elExport: '', // 导出el
       loadProgress: 0, // 动态显示进度条
       progressFlag: false, // 关闭进度条
       tempData:[],
@@ -430,6 +433,9 @@ export default {
       ]
     }
   },
+  mounted () {
+    this.elExport = document.getElementById('exportExcel')
+  },
   methods: {
     handleSizeChange: function (size) {
       this.config.pagesize = size// 每页下拉显示数据
@@ -675,29 +681,87 @@ export default {
           })
     },
     //定义导出Excel表格事件
-    exportRow () {
-      /* 从表生成工作簿对象 */
-      var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
-      /* 获取二进制字符串作为输出 */
-      var wbout = XLSX.write(wb, {
-        bookType: "xlsx",
-        bookSST: true,
-        type: "array"
-      });
-      try {
-        FileSaver.saveAs(
-            //Blob 对象表示一个不可变、原始数据的类文件对象。
-            //Blob 表示的不一定是JavaScript原生格式的数据。
-            //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
-            //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
-            new Blob([wbout], { type: "application/octet-stream" }),
-            //设置导出文件名称
-            "导出文档.xlsx"
-        );
-      } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
+    exportRow (){
+      // 生成列名
+      let data = []
+      let len=this.tableLabel.length;
+      let m=this.tableData.length;
+      for(var i=0;i<=m;i++) data.push({})
+      for (let i=0;i<len;i++) {
+        let label=this.tableLabel[i]["label"]
+        let prop=this.tableLabel[i]["prop"]
+        data[0][label] = label
+        for(let j=0;j<m;j++)
+        {
+          let value=this.tableData[j][prop]
+          if(!value||value=='null'||value=='NULL') value=''
+          data[j+1][label]=value
+        }
       }
-      return wbout;
+      this.exportExcel(data, '工程审计导出数据')
+    },
+    exportExcel (json, downName, type) {
+      // 获取列名
+      let keyMap = []
+      for (let k in json[0]) {
+        keyMap.push(k)
+      }
+
+      // 用来保存转换好的json
+      let tmpdata = []
+      json.map((v, i) => keyMap.map((k, j) => Object.assign({}, {
+        v: v[k],
+        position: (j > 25 ? this.getCharCol(j) : String.fromCharCode(65 + j)) + (i + 1)
+      }))).reduce((prev, next) => prev.concat(next)).forEach(function (v) {
+        tmpdata[v.position] = {
+          v: v.v
+        }
+      })
+      let outputPos = Object.keys(tmpdata)  // 设置区域，比如表格从A1到D10
+      let tmpWB = {
+        SheetNames: ['mySheet'], // 保存的表标题
+        Sheets: {
+          'mySheet': Object.assign({},
+              tmpdata, // 内容
+              {
+                '!ref': outputPos[0] + ':' + outputPos[outputPos.length - 1] // 设置填充区域
+              })
+        }
+      }
+
+      // 创建二进制对象写入转换好的字节流
+      let tmpDown = new Blob([this.s2ab(XLSX.write(tmpWB,
+          { bookType: (type === undefined ? 'xlsx' : type), bookSST: false, type: 'binary' } // 这里的数据是用来定义导出的格式类型
+      ))], {
+        type: ''
+      })
+
+      this.elExport.download = downName + '.xlsx'  // 下载名称
+      this.elExport.href = URL.createObjectURL(tmpDown)  // 绑定a标签到新创建对象超链接
+      this.elExport.click()  // 模拟点击实现下载
+
+      // 释放，用 URL.revokeObjectURL() 释放
+      setTimeout(() => URL.revokeObjectURL(tmpDown), 100)
+    },
+    // 字符串转字符流
+    s2ab (s) {
+      var buf = new ArrayBuffer(s.length)
+      var view = new Uint8Array(buf)
+      for (var i = 0; i !== s.length; ++i) {
+        view[i] = s.charCodeAt(i) & 0xFF
+      }
+      return buf
+    },
+    // 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。
+    getCharCol (n) {
+      let s = ''
+      let m = 0
+      while (n > 0) {
+        m = n % 26 + 1
+        s = String.fromCharCode(m + 64) + s
+        n = (n - m) / 26
+      }
+      return s
     },
     searchKey (keyword) {
       if (keyword == "" || keyword == undefined || keyword == null) {
