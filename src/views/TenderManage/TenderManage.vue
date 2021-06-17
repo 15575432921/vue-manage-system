@@ -120,25 +120,7 @@ export default {
         }
       }, 1000);
     };
-    // let isLessOneDigits = (rule, value, callback) => {
-    //   setTimeout(() => {
-    //     if (!value) {
-    //       callback();
-    //     } else if (!Number(value)) {
-    //       callback(new Error("请输入数字！"));
-    //     } else if (value > 1.0) {
-    //       callback(new Error("请输入小于1.0的数字"));
-    //     } else {
-    //       const re = /^\d{0,1}(\d{0,1})(\.{0,1}\d*)?$/;
-    //       const rsCheck = re.test(value);
-    //       if (!rsCheck) {
-    //         callback(new Error("小数点前最多1位数字"));
-    //       } else {
-    //         callback();
-    //       }
-    //     }
-    //   }, 1000);
-    // };
+
     let isSpecialChar = (rule, value, callback) => {
       setTimeout(() => {
         if (!value) {

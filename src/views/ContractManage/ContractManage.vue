@@ -151,6 +151,11 @@ export default {
           width: 180
         },
         {
+          prop: "customer_name",
+          label: "客户名称",
+          width: 180
+        },
+        {
           prop: "file_uploaddate",
           label: "上传日期",
           width: 150
@@ -195,8 +200,10 @@ export default {
         file_type: "",
         file_property: "",
         file_version: "",
-        file_project: ""
-      },
+        file_project: "",
+        customer_name:"",
+
+        },
       operateFormLabel: [
         {
           model: "file_code",
@@ -239,9 +246,17 @@ export default {
           model: "file_project",
           label: "所属项目名称",
           width: 180
-        }
+        },
+        {
+          model: "customer_name",
+          label: "客户名称",
+          width: 180
+        },
       ],
       rules: {
+        customer_name:[
+          { required: true, message: '请输入客户名称', trigger: 'blur' },
+        ],
         file_code: [
           { required: true, message: '请输入合同编号', trigger: 'blur' },
           { min: 10, max: 255, message: '合同编号长度需要在 10 到 255 个字符', trigger: 'blur' }
