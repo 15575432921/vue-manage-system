@@ -193,11 +193,11 @@ export default {
           label: '审定金额(元)',
           width: 160
         },
-        {
-          prop: 'project_reduction',
-          label: '审减金额(元)',
-          width: 160
-        },
+        // {
+        //   prop: 'project_reduction',
+        //   label: '审减金额(元)',
+        //   width: 160
+        // },
         {
           prop: "file_url",
           label: "下载链接",
