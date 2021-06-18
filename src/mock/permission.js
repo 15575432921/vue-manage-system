@@ -9,7 +9,6 @@ export default {
         console.log("getmenu    " + JSON.parse(config.body))
         // 先判断用户是否存在
         if (permission === '1' || permission === '2' || permission === '3' || permission === '4') {
-            // 判断账号和密码是否对应
             if (permission === '3') {
                 return {
                     type: '经办人',

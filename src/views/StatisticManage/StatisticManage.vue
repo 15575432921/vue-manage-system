@@ -103,7 +103,7 @@ export default {
       console.log(this.searchObj);
       // axios._post("http://8.129.86.121:80/sta/getAll",this.searchObj).then(res=>{
       axios._post("/sta/getAll", this.searchObj).then(res => {
-        this.$message.success("获取文档列表成功！")
+        this.$message.success("获取统计数据成功！")
         this.xData = res.xData
         this.yData = res.yData
         let n = this.xData.length

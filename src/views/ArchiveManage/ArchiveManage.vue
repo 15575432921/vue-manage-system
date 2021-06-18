@@ -263,7 +263,7 @@ export default {
           data[j+1][label]=value
         }
       }
-      this.exportExcel(data, '财务审计导出数据')
+      this.exportExcel(data, '导出数据')
     },
     exportExcel (json, downName, type) {
       // 获取列名

@@ -9,9 +9,8 @@
       ></tender-form>
       <!-- action表示文件要上传到的后台API地址 -->
       <el-upload
-        class="upload-demo"
-        :action="uploadApiUrl"
-        accept="
+          class="upload-demo"
+          accept="
         image/jpeg,
         image/png,
         image/jpg,
@@ -21,18 +20,16 @@
         application/vnd.ms-excel,
         application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
         .zip"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :before-remove="beforeRemove"
-        multiple
-        :limit="1"
-        :on-exceed="handleExceed"
-        :on-change="handleChange"
-        :file-list="fileList"
-        :auto-upload="false"
-        :show-file-list="true"
-        :on-progress="uploadOnProgress"
-        ref="uploadComponent"
+          :on-preview="handlePreview"
+          :before-remove="beforeRemove"
+          action=""
+          multiple
+          :on-change="handleChange"
+          :file-list="fileList"
+          :auto-upload="false"
+          :show-file-list="true"
+          :on-progress="uploadOnProgress"
+          ref="uploadComponent"
       >
       </el-upload>
       <div>
@@ -377,25 +374,15 @@ export default {
   },
   methods: {
     handleSizeChange: function (size) {
-      this.config.pagesize = size;
+      this.config.pagesize = size
       // console.log(this.config.pagesize)// 每页下拉显示数据
     },
     handlePageChange: function (currentPage) {
-      this.config.currentPage = currentPage;
+      this.config.currentPage = currentPage
       // console.log(this.config.currentPage) // 点击第几页
-    },
-    handleRemove(file, fileList) {
-      this.$refs["uploadComponent"].clearFiles();
     },
     handlePreview(file) {
       console.log(file);
-    },
-    handleExceed(files, fileList) {
-      this.$message.warning(
-        `当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${
-          files.length + fileList.length
-        } 个文件`
-      );
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
@@ -404,87 +391,42 @@ export default {
       this.progressFlag = true; // 显示进度条
       this.loadProgress = parseInt(event.percent); // 动态获取文件上传进度
       if (this.loadProgress >= 100) {
-        this.loadProgress = 100;
+        this.loadProgress = 100
         setTimeout(() => {
-          this.progressFlag = false;
-        }, 1000); // 一秒后关闭进度条
+          this.progressFlag = false
+        }, 1000) // 一秒后关闭进度条
       }
     },
     handleChange(file, fileList) {
       this.fileList = fileList;
     },
     uploadCheck() {
-      var result = 0;
-      for (var key in this.operateForm) {
-        if (key === "file_url" && this.operateForm[key] != "NULL") {
-          result = 1;
-          break;
-        }
-      }
-
-      if (this.fileList.length > 0) {
-        result = 2;
-      }
-
-      if (result === 1) {
-        this.$confirm(
-          "已经上传的旧文件将会被覆盖，请问确定要上传新的文件吗？",
-          "提示",
-          {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning",
-          }
-        )
-          .then(() => {
-            // console.log(this.$refs['uploadComponent'].$refs['upload-inner']);
-            this.$refs["uploadComponent"].$refs["upload-inner"].handleClick();
-          })
-          .catch(() => {
-            this.$message({
-              type: "info",
-              message: "已取消上传文件",
-            });
-          });
-      } else if (result === 2) {
-        this.$confirm("每次仅能上传一个文件，", "提示", {
-          confirmButtonText: "确定",
-          type: "warning",
-        });
-      } else {
-        this.$refs["uploadComponent"].$refs["upload-inner"].handleClick();
-      }
+      this.$refs['uploadComponent'].$refs['upload-inner'].handleClick();
     },
     onBeforeUpload(file) {
-      // console.log(file)
-
-      const isIMAGE =
-        file.type === "image/jpeg" ||
-        file.type === "image/png" ||
-        file.type === "image/jpg";
-      const isDOCUMENT =
-        file.type === "application/pdf" ||
-        file.type === "application/msword" ||
-        file.type ===
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-        file.type === "application/vnd.ms-excel" ||
-        file.type ===
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-      const isZip = file.type === "application/x-zip-compressed";
+      //console.log(file)
+      const isIMAGE = (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg");
+      const isDOCUMENT = (file.type === "application/pdf" ||
+          file.type === "application/msword" ||
+          file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+          file.type === "application/vnd.ms-excel" ||
+          file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+      const isZip = (file.type === "application/x-zip-compressed");
       const isLt100M = file.size / 1024 / 1024 < 100;
-
-      // console.log("isIMAGE",isIMAGE);
-      // console.log("isDOCUMENT",isDOCUMENT);
-      // console.log("isZip",isZip);
-      // console.log("isLt100M",isLt100M);
-
       if (!isIMAGE && !isDOCUMENT && !isZip) {
-        this.$message.error("不支持此格式文件上传！");
+        this.$message({
+          type: "error",
+          message: "不支持此格式文件上传！"
+        });
       }
 
       if (!isLt100M) {
-        this.$message.error("上传文件大小不得大于100MB");
+        this.$message({
+          type: "error",
+          message: "上传文件大小不得大于100MB！"
+        });
       }
+
       return (isIMAGE || isDOCUMENT || isZip) && isLt100M;
     },
     getList(name = "") {
@@ -567,30 +509,29 @@ export default {
             let formdata = new FormData();
             for (var key in this.operateForm) {
               if (key != "issue_state" && key != "submit_state") {
-                formdata.append(key, this.operateForm[key]);
+                formdata.append(key, this.operateForm[key])
               }
             }
 
             if (this.fileList.length != 0) {
-              formdata.append("file", this.fileList[0].raw);
-              this.fileList.splice(0, 1);
+              for(var file of this.fileList){
+                formdata.append("files", file.raw,file.raw.name)
+              }
+              this.fileList=[]
             }
 
-            axios._post("/tender/update", formdata).then(
-              (res) => {
-                this.$message.success("更新项目成功！");
-                this.isShow = false;
-                // console.log("Inserted " + res);//res是返回插入数据的id
-                this.getList();
-              },
-              (err) => {
-                // alert("error!!!");
-                this.$message({
-                  message: "更新投标失败",
-                  type: "error",
-                });
-              }
-            );
+            axios._post('/tender/update', formdata).then(res => {
+              this.$message.success("更新投标成功");
+              this.isShow = false;
+              console.log("Inserted " + res);//res是返回插入数据的id
+              this.getList()
+            }, err => {
+              alert("error!!!");
+              this.$message({
+                message: "更新文档失败",
+                type: "error"
+              });
+            })
           }
         } else {
           this.$message({
